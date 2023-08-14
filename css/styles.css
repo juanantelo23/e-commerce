@@ -188,3 +188,11 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+.alert-heading {
+text-align: center;
+margin: 20px;
+}
+#CategoryCars{
+  margin-bottom: 35px;
+  color: rgb(80, 75, 75);
+}
