@@ -347,3 +347,15 @@ a.custom-card:hover {
   color: #8B8E98;
   text-decoration: underline;
 }
+
+.sign-in_btn {
+  background-color: blue; 
+}
+
+.sign-in_btn a {
+  color: white; 
+  text-decoration: none;
+}
+
+
+
