@@ -355,3 +355,8 @@ a.custom-card:hover {
   color: white; 
   text-decoration: none;
 }
+
+#titulo{
+  text-align: center;
+  padding: 30px;
+}
