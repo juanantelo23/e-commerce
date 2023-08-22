@@ -34,7 +34,7 @@ function sortCategories(criteria, array){
 
     return result;
 }
-
+// CREO que es aca!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (Pauta 2)
 function setCatID(id) {
     localStorage.setItem("catID", id);
     window.location = "products.html"
