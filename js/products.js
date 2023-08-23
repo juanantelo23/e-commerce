@@ -1,5 +1,17 @@
-const products = "https://japceibal.github.io/emercado-api/cats_products/101.json";
+document.addEventListener("DOMContentLoaded", function() {
+    const catID = localStorage.getItem("catID");
 
+    // Crear la URL de la API utilizando el catID obtenido
+    const url = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
+
+    // Realizar la solicitud utilizando la URL generada
+    getJSONData2(url).then(function(resultObj) {
+        if (resultObj.status === "ok") {
+            const categoriesArray = resultObj.data.products;
+            showCategoriesList(categoriesArray);
+        }
+    });
+});
 async function getJSONData2(url) {
     return fetch(url)
         .then(response => {
@@ -16,16 +28,6 @@ async function getJSONData2(url) {
             return { status: 'error', data: error };
         });
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-    getJSONData2(products).then(function(resultObj) {
-        if (resultObj.status === "ok") {
-            const categoriesArray = resultObj.data.products;
-            showCategoriesList(categoriesArray);
-        }
-    });
-});
-
 function showCategoriesList(array) {
     let htmlContentToAppend = "";
 
