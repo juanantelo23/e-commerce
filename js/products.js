@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const catID = localStorage.getItem("catID");
-
+    
     // Crear la URL de la API utilizando el catID obtenido
     const url = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
 
