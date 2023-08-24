@@ -55,3 +55,8 @@ function showCategoriesList(array) {
     }
     document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
 }
+
+function updateCategoryTitle(categoryName, categoryTitle) {
+    categoryTitle.innerHTML = categoryName;
+  }
+
