@@ -60,3 +60,4 @@ function updateCategoryTitle(categoryName, categoryTitle) {
     categoryTitle.innerHTML = categoryName;
   }
 
+//hola
