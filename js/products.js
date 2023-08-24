@@ -63,3 +63,15 @@ function updateCategoryTitle(categoryName, categoryTitle) {
     categoryTitle.innerHTML = categoryName;
   }
 
+  document.getElementById("clearRangeFilterPrice").addEventListener("click", function(){
+    
+    document.getElementById("rangeFilterPriceMin").value = "";
+    document.getElementById("rangeFilterPriceMax").value = "";
+
+    minPrice = undefined;
+    maxPrice = undefined;
+
+    showCategoriesList();
+});
+
+
