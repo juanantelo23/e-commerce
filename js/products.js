@@ -57,6 +57,7 @@ function showCategoriesList(array) {
         `;
     }
     document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+    return htmlContentToAppend;
 }
 
 // Ordena de forma descendente          
@@ -68,31 +69,9 @@ ascendente.addEventListener("click", function () {
         .then((response) => response.json())
         .then((data) => {
             let productosOrdenados = ordenarProductosAscendente(data.products);
-            showCategoriesList(productosOrdenados);
-            let productosHTML = "";
-            for (let i = 0; i < productosOrdenados.length; i++) {
-                productosHTML +=
-                    `
-                <div class="list-group-item list-group-item-action">
-                    <div class="row">
-                        <div class="col-3">
-                            <img src="${data[i].image}" alt="product image" class="img-thumbnail">
-                        </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <div class="mb-1">
-                                    <h4>${data[i].name}-${data[i].currency} ${data[i].cost} </h4>
-                                    <p>${data[i].description}</p>
-                                </div>
-                                <small class="text-muted"> ${data[i].soldCount} vendidos </small>
-                            </div>
-                            <small class="text-muted"> </small>
-                        </div>
-                    </div>
-                </div>
-                `
-            };
-            document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+            let ordenadosAsc = showCategoriesList(productosOrdenados);
+            
+            document.getElementById("cat-list-container").innerHTML = ordenadosAsc;
         })
 
 });
@@ -109,31 +88,9 @@ descendente.addEventListener("click", function () {
         .then((response) => response.json())
         .then((data) => {
             let productosOrdenados = ordenarProductosDescendente(data.products);
-            showCategoriesList(productosOrdenados);
-            let productosHTML = "";
-            for (let i = 0; i < productosOrdenados.length; i++) {
-                productosHTML +=
-                    `
-                <div class="list-group-item list-group-item-action">
-                    <div class="row">
-                        <div class="col-3">
-                            <img src="${data[i].image}" alt="product image" class="img-thumbnail">
-                        </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <div class="mb-1">
-                                    <h4>${data[i].name}-${data[i].currency} ${data[i].cost} </h4>
-                                    <p>${data[i].description}</p>
-                                </div>
-                                <small class="text-muted"> ${data[i].soldCount} vendidos </small>
-                            </div>
-                            <small class="text-muted"> </small>
-                        </div>
-                    </div>
-                </div>
-                `
-            };
-            document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+            let ordenadosDesc = showCategoriesList(productosOrdenados);
+           
+            document.getElementById("cat-list-container").innerHTML = ordenadosDesc;
         })
 
 });
@@ -150,31 +107,9 @@ relevancia.addEventListener("click", function () {
         .then((response) => response.json())
         .then((data) => {
             let productosOrdenados = ordenarProductosRelevancia(data.products);
-            showCategoriesList(productosOrdenados);
-            let productosHTML = "";
-            for (let i = 0; i < productosOrdenados.length; i++) {
-                productosHTML +=
-                    `
-                <div class="list-group-item list-group-item-action">
-                    <div class="row">
-                        <div class="col-3">
-                            <img src="${data[i].image}" alt="product image" class="img-thumbnail">
-                        </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <div class="mb-1">
-                                    <h4>${data[i].name}-${data[i].currency} ${data[i].cost} </h4>
-                                    <p>${data[i].description}</p>
-                                </div>
-                                <small class="text-muted"> ${data[i].soldCount} vendidos </small>
-                            </div>
-                            <small class="text-muted"> </small>
-                        </div>
-                    </div>
-                </div>
-                `
-            };
-            document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+            let relevancia = showCategoriesList(productosOrdenados);
+            
+            document.getElementById("cat-list-container").innerHTML = relevancia;
         })
 });
 
@@ -194,7 +129,60 @@ function updateCategoryTitle(categoryName, categoryTitle) {
     minPrice = undefined;
     maxPrice = undefined;
 
-    showCategoriesList();
+    const catID = localStorage.getItem("catID");
+    const url = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+            
+            let lista = showCategoriesList(data.products);
+            
+            document.getElementById("cat-list-container").innerHTML = lista;
+        })
 });
+
+let filtroPrecio = document.getElementById("rangeFilterPrice");
+filtroPrecio.addEventListener("click", function(){
+    let precioMin = document.getElementById("rangeFilterPriceMin").value;
+    let precioMax = document.getElementById("rangeFilterPriceMax").value;
+
+    if ((precioMin != undefined) && (precioMin != "") && (parseInt(precioMin)) >= 0){
+        precioMin = parseInt(precioMin);
+    }
+    else{
+        precioMin = undefined;
+    }
+
+    if ((precioMax != undefined) && (precioMax != "") && (parseInt(precioMax)) >= 0){
+       precioMax = parseInt(precioMax);
+    }
+    else{
+        precioMax = undefined;
+    }
+
+    console.log("Precio max", precioMax);
+    console.log("Precio min", precioMin);
+            
+    const catID = localStorage.getItem("catID");
+    const url = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+            let datos = data.products;
+            let arrayFiltrado = [];
+            for (let i = 0; i < datos.length; i++) {
+                if (datos[i].cost >= precioMin && datos[i].cost <= precioMax ) {
+                    console.log(datos[i]);
+                    arrayFiltrado.push(datos[i]);
+                 }
+            };
+            
+            let filter = showCategoriesList(arrayFiltrado);
+            
+            document.getElementById("cat-list-container").innerHTML = filter;
+        })
+
+   
+})
 
 
