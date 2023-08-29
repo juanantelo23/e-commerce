@@ -39,3 +39,15 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+//Método para imprimir el nombre de usuario en la barra de navegación
+document.addEventListener("DOMContentLoaded", function(){
+  var userName = localStorage.getItem("user_name"); //toma los datos guardados en login
+  var insertName = document.createElement("a"); //crea una etiqueta "a" en la barra de navegación
+  insertName.classList.add('nav-link'); //Inserta la clase existente para las etiquetas "a" del top-nav
+
+  if (userName) {
+      insertName.innerHTML = userName; //toma el dato de la variable userName y lo imprime en la top-nav
+      document.getElementById('user').appendChild(insertName); //agrega la etiqueta creada como hijo del elemento li
+  }
+});

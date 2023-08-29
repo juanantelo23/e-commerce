@@ -8,3 +8,10 @@ document.getElementById("formulario").addEventListener("submit", function(event)
         window.location.href = "index.html";
     }  
 })
+//Método que guarda el nombre ingresado en el login 
+document.getElementById("botonUser").addEventListener("click", function(event){
+    var user = document.getElementById("email_field").value; // Valor campo usuario
+    if (user) {
+        localStorage.setItem("user_name", user);// Gardar clave en el almacenamiento local del navegador
+    }  
+});
