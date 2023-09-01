@@ -14,7 +14,10 @@ document.addEventListener("DOMContentLoaded", function() {
             updateCategoryTitle(catName, categoryTitle);
         }
     });
+
+    searchFilters(".busqueda", ".searching");
 });
+
 async function getJSONData2(url) {
     return fetch(url)
         .then(response => {
@@ -31,13 +34,27 @@ async function getJSONData2(url) {
             return { status: 'error', data: error };
         });
 }
+
+
+const d = document;
+function searchFilters(input, selector){
+    d.addEventListener("keyup", e => {
+        if(e.target.matches(input)) {
+            d.querySelectorAll(selector).forEach(el => el.textContent.toLowerCase().includes(e.target.value)
+            ?el.classList.remove("filter")
+            :el.classList.add("filter")
+            );
+            
+        }
+    })
+}
 function showCategoriesList(array) {
     let htmlContentToAppend = "";
 
     for (let i = 0; i < array.length; i++) {
         let product = array[i];
         htmlContentToAppend += `
-        <div class="list-group-item list-group-item-action">
+        <div class="list-group-item list-group-item-action searching">
             <div class="row">
                 <div class="col-3">
                     <img src="${product.image}" alt="product image" class="img-thumbnail">

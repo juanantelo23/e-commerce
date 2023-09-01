@@ -360,3 +360,8 @@ a.custom-card:hover {
   text-align: center;
   padding: 30px;
 }
+
+.filter{
+  display: none;
+}
+
