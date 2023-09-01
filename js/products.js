@@ -35,19 +35,6 @@ async function getJSONData2(url) {
         });
 }
 
-
-const d = document;
-function searchFilters(input, selector){
-    d.addEventListener("keyup", e => {
-        if(e.target.matches(input)) {
-            d.querySelectorAll(selector).forEach(el => el.textContent.toLowerCase().includes(e.target.value)
-            ?el.classList.remove("filter")
-            :el.classList.add("filter")
-            );
-            
-        }
-    })
-}
 function showCategoriesList(array) {
     let htmlContentToAppend = "";
 
@@ -76,8 +63,26 @@ function showCategoriesList(array) {
     document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
     return htmlContentToAppend;
 }
+//Funcion que indica la categoria
+function updateCategoryTitle(categoryName, categoryTitle) {
+    categoryTitle.innerHTML = categoryName;
+  }
 
-// Ordena de forma descendente          
+  //Funcion para la barra de busqueda
+const d = document;
+function searchFilters(input, selector){
+    d.addEventListener("keyup", e => {
+        if(e.target.matches(input)) {
+            d.querySelectorAll(selector).forEach(el => el.textContent.toLowerCase().includes(e.target.value)
+            ?el.classList.remove("filter")
+            :el.classList.add("filter")
+            );
+            
+        }
+    })
+}
+
+// Ordena de forma ascendente          
 let ascendente = document.getElementById("sortByCountDow");
 ascendente.addEventListener("click", function () {
     const catID = localStorage.getItem("catID");
@@ -134,11 +139,49 @@ function ordenarProductosRelevancia(productos) {
     return productos.sort((b, a) => parseInt(a.soldCount) - parseInt(b.soldCount));
 }
 
-function updateCategoryTitle(categoryName, categoryTitle) {
-    categoryTitle.innerHTML = categoryName;
-  }
 
-  document.getElementById("clearRangeFilterPrice").addEventListener("click", function(){
+  //Funcion de filtro por precio
+let filtroPrecio = document.getElementById("rangeFilterPrice");
+filtroPrecio.addEventListener("click", function(){
+    let precioMin = document.getElementById("rangeFilterPriceMin").value;
+    let precioMax = document.getElementById("rangeFilterPriceMax").value;
+
+    if ((precioMin != undefined) && (precioMin != "") && (parseInt(precioMin)) >= 0){
+        precioMin = parseInt(precioMin);
+    }
+    else{
+        precioMin = undefined;
+    }
+
+    if ((precioMax != undefined) && (precioMax != "") && (parseInt(precioMax)) >= 0){
+       precioMax = parseInt(precioMax);
+    }
+    else{
+        precioMax = undefined;
+    }
+            
+    const catID = localStorage.getItem("catID");
+    const url = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+            let datos = data.products;
+            let arrayFiltrado = [];
+            for (let i = 0; i < datos.length; i++) {
+                if (datos[i].cost >= precioMin && datos[i].cost <= precioMax ) {
+                    arrayFiltrado.push(datos[i]);
+                 }
+            };
+            
+            let filter = showCategoriesList(arrayFiltrado);
+            
+            document.getElementById("cat-list-container").innerHTML = filter;
+        })
+
+   
+})
+//Funcion Limpiar
+document.getElementById("clearRangeFilterPrice").addEventListener("click", function(){
     
     document.getElementById("rangeFilterPriceMin").value = "";
     document.getElementById("rangeFilterPriceMax").value = "";
@@ -158,48 +201,5 @@ function updateCategoryTitle(categoryName, categoryTitle) {
         })
 });
 
-let filtroPrecio = document.getElementById("rangeFilterPrice");
-filtroPrecio.addEventListener("click", function(){
-    let precioMin = document.getElementById("rangeFilterPriceMin").value;
-    let precioMax = document.getElementById("rangeFilterPriceMax").value;
-
-    if ((precioMin != undefined) && (precioMin != "") && (parseInt(precioMin)) >= 0){
-        precioMin = parseInt(precioMin);
-    }
-    else{
-        precioMin = undefined;
-    }
-
-    if ((precioMax != undefined) && (precioMax != "") && (parseInt(precioMax)) >= 0){
-       precioMax = parseInt(precioMax);
-    }
-    else{
-        precioMax = undefined;
-    }
-
-    console.log("Precio max", precioMax);
-    console.log("Precio min", precioMin);
-            
-    const catID = localStorage.getItem("catID");
-    const url = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
-    fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-            let datos = data.products;
-            let arrayFiltrado = [];
-            for (let i = 0; i < datos.length; i++) {
-                if (datos[i].cost >= precioMin && datos[i].cost <= precioMax ) {
-                    console.log(datos[i]);
-                    arrayFiltrado.push(datos[i]);
-                 }
-            };
-            
-            let filter = showCategoriesList(arrayFiltrado);
-            
-            document.getElementById("cat-list-container").innerHTML = filter;
-        })
-
-   
-})
 
 
