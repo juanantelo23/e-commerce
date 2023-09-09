@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     searchFilters(".busqueda", ".searching");
 });
-
+//Función async para obtener los datos de la API
 async function getJSONData2(url) {
     return fetch(url)
         .then(response => {
@@ -66,7 +66,7 @@ function showCategoriesList(array) {
 //Funcion que indica la categoria
 function updateCategoryTitle(categoryName, categoryTitle) {
     categoryTitle.innerHTML = categoryName;
-  }
+}
 
   //Funcion para la barra de busqueda
 const d = document;
@@ -154,7 +154,7 @@ filtroPrecio.addEventListener("click", function(){
     }
 
     if ((precioMax != undefined) && (precioMax != "") && (parseInt(precioMax)) >= 0){
-       precioMax = parseInt(precioMax);
+    precioMax = parseInt(precioMax);
     }
     else{
         precioMax = undefined;
@@ -170,7 +170,7 @@ filtroPrecio.addEventListener("click", function(){
             for (let i = 0; i < datos.length; i++) {
                 if (datos[i].cost >= precioMin && datos[i].cost <= precioMax ) {
                     arrayFiltrado.push(datos[i]);
-                 }
+                }
             };
             
             let filter = showCategoriesList(arrayFiltrado);
@@ -178,7 +178,6 @@ filtroPrecio.addEventListener("click", function(){
             document.getElementById("cat-list-container").innerHTML = filter;
         })
 
-   
 })
 //Funcion Limpiar
 document.getElementById("clearRangeFilterPrice").addEventListener("click", function(){
