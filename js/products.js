@@ -38,10 +38,11 @@ async function getJSONData2(url) {
 function showCategoriesList(array) {
     let htmlContentToAppend = "";
 
+
     for (let i = 0; i < array.length; i++) {
         let product = array[i];
         htmlContentToAppend += `
-        <div class="list-group-item list-group-item-action searching">
+        <div id="${product.id}" class="list-group-item list-group-item-action searching">
             <div class="row">
                 <div class="col-3">
                     <img src="${product.image}" alt="product image" class="img-thumbnail">
@@ -60,9 +61,26 @@ function showCategoriesList(array) {
         </div>
         `;
     }
+   
     document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+
+    const productListItems = document.querySelectorAll('.list-group-item.searching');
+    productListItems.forEach(function(item) {
+        item.addEventListener("click", function() {
+            const productId = item.id;
+            localStorage.setItem("productID", productId);
+            window.location = "product-info.html";
+        });
+    });
+
+
+
+
     return htmlContentToAppend;
 }
+
+
+
 //Funcion que indica la categoria
 function updateCategoryTitle(categoryName, categoryTitle) {
     categoryTitle.innerHTML = categoryName;
