@@ -365,3 +365,25 @@ a.custom-card:hover {
   display: none;
 }
 
+.product-info h2 {
+  border-bottom: 1px solid rgb(188, 188, 188);
+  padding: 40px 0;
+  margin-bottom: 20px;
+}
+.product-info p {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  font-weight: bold;
+}
+.product-info span {
+  font-weight: normal;
+}
+.product-info img {
+  max-height: 240px;
+  padding: 10px;
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 4px;
+}
+
+
