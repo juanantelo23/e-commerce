@@ -42,23 +42,35 @@
       <div class="comments-container" id="commentsContainer"></div> 
       <!-- Los comentarios se cargarán aquí -->
           </div>
-        <!-- Formulario para agregar comentarios -->
-        <div class="add-comment">
-          <h3>Agregar Comentario</h3>
-          <form id="commentForm">
-            <div class="form-group">
-              <label for="name">Nombre:</label>
-              <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-              <label for="comment">Comentario:</label>
-              <textarea id="comment" name="comment" required></textarea>
-            </div>
-            <button type="submit">Enviar Comentario</button>
-          </form>
-        </div>
+<!-- Formulario para agregar comentarios -->
+<div class="add-comment">
+  <h3>Agregar Comentario</h3>
+  <div class="estrella">
+    <p class="clasificacion1">
+      <input id="radio1" type="radio" name="estrellas" value="1">
+      <label for="radio1">★</label>
+      <input id="radio2" type="radio" name="estrellas" value="2">
+      <label for="radio2">★</label>
+      <input id="radio3" type="radio" name="estrellas" value="3">
+      <label for="radio3">★</label>
+      <input id="radio4" type="radio" name="estrellas" value="4">
+      <label for="radio4">★</label>
+      <input id="radio5" type="radio" name="estrellas" value="5">
+      <label for="radio5">★</label>
+    </p>
+  </div>
+  <form id="commentForm">
+    <div class="form-group">
+      <label for="name">Nombre:</label>
+      <input type="text" id="name" name="name" required>
     </div>
+    <div class="form-group">
+      <label for="comment">Comentario:</label>
+      <textarea id="comment" name="comment" required></textarea>
     </div>
+    <button type="submit">Enviar Comentario</button>
+  </form>
+</div>
   </main>
   <footer class="text-muted">
     <div class="container">

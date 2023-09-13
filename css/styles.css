@@ -432,12 +432,7 @@ a.custom-card:hover {
   margin-bottom: 20px; /* Espacio inferior del título */
 }
 
-.add-comment label {
-  display: block; /* Coloca las etiquetas en líneas separadas */
-  margin-bottom: 5px; /* Espacio inferior entre etiquetas y campos */
-}
-
-.add-comment input[type="text"],
+.add-comment input[type="text"], 
 .add-comment textarea {
   width: 100%; /* Ancho completo para campos de entrada de texto */
   padding: 10px; /* Espacio interno en campos de entrada */
@@ -457,4 +452,34 @@ a.custom-card:hover {
 
 .add-comment button[type="submit"]:hover {
   background-color: #0056b3;
+}
+/* Agrega este estilo al final de tu archivo CSS o enlázalo como un archivo externo */
+.estrella {
+  text-align: center; /* Centra las estrellas horizontalmente */
+  margin-bottom: 15px; /* Espacio entre las estrellas y los campos del formulario */
+}
+
+.clasificacion1 {
+  display: inline-block;
+}
+
+.clasificacion1 input[type="radio"] {
+  display: none;
+}
+
+.clasificacion1 label {
+  font-size: 30px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.clasificacion1 label:before {
+  content: "★";
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+
+.clasificacion1 input[type="radio"]:checked ~ label:before {
+  color: gold;
 }

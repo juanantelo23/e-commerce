@@ -38,34 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
                   </div>
               `;
 
-        // Resto del código para el formulario de comentarios
-        const commentForm = document.getElementById('commentForm');
-        commentForm.addEventListener('submit', function (e) {
-          e.preventDefault(); // Evita que el formulario se envíe de inmediato
-
-          // Recopila los valores del formulario
-          const name = document.getElementById('name').value;
-          const commentText = document.getElementById('comment').value;
-
-          // Crea un nuevo comentario y agrega la fecha aleatoria
-          const newComment = `
-            <div class="comment">
-              <h3>${name}:</h3>
-              <p>${commentText}</p>
-              <p>${new Date().toLocaleString()}</p>
-            </div>
-          `;
-
-          // Agrega el nuevo comentario al contenedor
-          commentsContainer.innerHTML += newComment;
-
-          // Limpia el formulario
-          document.getElementById('name').value = '';
-          document.getElementById('comment').value = '';
-        });
-
+        
         // Box de comentarios
-
         // Construir la URL de comentarios utilizando el ID del producto
         const commentsUrl = `https://japceibal.github.io/emercado-api/products_comments/${productID}.json`;
         // Realizar una solicitud GET a la URL de comentarios
@@ -88,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <h3>${comment.user}:</h3>
                 <p>${comment.description}</p>
                 <p>${comment.dateTime}</p>
+                
               `;
               commentsContainer.appendChild(commentElement);
             });
@@ -102,4 +77,30 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch((error) => {
       console.error("Error loading product details:", error);
     });
+});
+
+// Resto del código para el formulario que agrega comentarios
+const commentForm = document.getElementById('commentForm');
+commentForm.addEventListener('submit', function (e) {
+  e.preventDefault(); // Evita que el formulario se envíe de inmediato
+
+  // Recopila los valores del formulario
+  const name = document.getElementById('name').value;
+  const commentText = document.getElementById('comment').value;
+
+  // Crea un nuevo comentario y agrega la fecha aleatoria
+  const newComment = `
+    <div class="comment">
+      <h3>${name}:</h3>
+      <p>${commentText}</p>
+      <p>${new Date().toLocaleString()}</p>
+    </div>
+  `;
+
+  // Agrega el nuevo comentario al contenedor
+  commentsContainer.innerHTML += newComment;
+
+  // Limpia el formulario
+  document.getElementById('name').value = '';
+  document.getElementById('comment').value = '';
 });
