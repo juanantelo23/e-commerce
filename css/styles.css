@@ -386,4 +386,75 @@ a.custom-card:hover {
   border-radius: 4px;
 }
 
+/* Estilos para la caja de comentarios */
+.comments-container {
+  background-color: #f5f5f5;
+  padding: 15px; /* Reduce el espacio alrededor de la caja */
+  border: 1px solid #ccc;
+  margin-top: 20px;
+  text-align: left;
+  max-width: 900px; /* Ajusta el ancho máximo de la caja según tus preferencias */
+  margin-left: auto; /* Centra la caja en la página */
+  margin-right: auto;
+}
+.comment {
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 12px; /* Ajuste del tamaño de fuente de los comentarios */
+}
+.comment h3 {
+  font-size: 14px; /* Ajuste del tamaño de fuente de los comentarios */
+}
+.commentsTitle {
+  text-align: center; /* Centra el texto horizontalmente */
+  margin-top: 50px; /* Ajusta el espacio superior según tus preferencias */
+  margin-bottom: 20px; /* Ajusta el espacio inferior según tus preferencias */
+  font-size:larger;
+}
+/* Estilos para el formulario de comentarios */
+.add-comment {
+  background-color: #f5f5f5;
+  padding: 15px; /* Espacio alrededor del formulario */
+  border: 1px solid #ccc;
+  margin-top: 20px;
+  text-align: left;
+  max-width: 900px; /* Ancho máximo del formulario */
+  margin-left: auto;
+  margin-right: auto;
+}
 
+.add-comment h3 {
+  text-align: center; /* Centra el título del formulario horizontalmente */
+  margin-top: 10px; /* Espacio superior del título */
+  margin-bottom: 20px; /* Espacio inferior del título */
+}
+
+.add-comment label {
+  display: block; /* Coloca las etiquetas en líneas separadas */
+  margin-bottom: 5px; /* Espacio inferior entre etiquetas y campos */
+}
+
+.add-comment input[type="text"],
+.add-comment textarea {
+  width: 100%; /* Ancho completo para campos de entrada de texto */
+  padding: 10px; /* Espacio interno en campos de entrada */
+  margin-bottom: 15px; /* Espacio inferior entre campos */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.add-comment button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-comment button[type="submit"]:hover {
+  background-color: #0056b3;
+}
