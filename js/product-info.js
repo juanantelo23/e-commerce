@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
                   </div>
               `;
 
-        
         // Box de comentarios
         // Construir la URL de comentarios utilizando el ID del producto
         const commentsUrl = `https://japceibal.github.io/emercado-api/products_comments/${productID}.json`;
@@ -53,12 +52,12 @@ document.addEventListener('DOMContentLoaded', function () {
           .then(comments => {
             // Limpia el contenedor de comentarios antes de agregar los nuevos comentarios
             commentsContainer.innerHTML = '';
-
             // Itera a través de los comentarios y agrégalos al contenedor
             comments.forEach(comment => {
               const commentElement = document.createElement('div');
               commentElement.classList.add('comment');
               commentElement.innerHTML = `
+            
                 <h3>${comment.user}:</h3>
                 <p>${comment.description}</p>
                 <p>${comment.dateTime}</p>
