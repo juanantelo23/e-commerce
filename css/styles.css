@@ -453,36 +453,10 @@ a.custom-card:hover {
 .add-comment button[type="submit"]:hover {
   background-color: #0056b3;
 }
-/* Agrega este estilo al final de tu archivo CSS o enlázalo como un archivo externo */
-.estrella {
+/*Estilos al div que contiene las estrellas*/
+.divStar {
   text-align: center; /* Centra las estrellas horizontalmente */
   margin-bottom: 15px; /* Espacio entre las estrellas y los campos del formulario */
-}
-
-.clasificacion1 {
-  display: inline-block;
-}
-
-.clasificacion1 input[type="radio"] {
-  display: none;
-}
-
-.clasificacion1 label {
-  font-size: 30px;
-  padding: 5px;
   cursor: pointer;
-}
+  }
 
-.clasificacion1 label:before {
-
-  width: 30px;
-  height: 30px;
-  display: inline-block;
-}
-
-.clasificacion1 input[type="radio"]:checked ~ label:before {
-  color: gold;
-}
-.check {
-  color: orangered;
-}
