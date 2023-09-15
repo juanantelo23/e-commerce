@@ -104,7 +104,7 @@ commentForm.addEventListener('submit', function (e) {
   document.getElementById('name').value = '';
   document.getElementById('comment').value = '';
 
-  // Limpia las estrellas seleccionadas
+  // Limpia las estrellas seleccionadas 
   clearSelectedStars();
 });
 

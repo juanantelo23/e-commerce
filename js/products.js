@@ -63,7 +63,8 @@ function showCategoriesList(array) {
     }
    
     document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
-
+    
+    //Se guarda en un localStorage el ID del producto seleccionado
     const productListItems = document.querySelectorAll('.list-group-item.searching');
     productListItems.forEach(function(item) {
         item.addEventListener("click", function() {
