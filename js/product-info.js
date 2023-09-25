@@ -3,9 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
   // Obtener el ID del producto almacenado en el almacenamiento local
   const productID = localStorage.getItem("productID");
 
-  // Construir la URL del JSON
-  const catID = localStorage.getItem("catID");
-  const url = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
+  // Construir la URL del JSON (sacamos del init el json correspondiente)
+  const url = `https://japceibal.github.io/emercado-api/products/${productID}.json`;
 
   // Obtener el elemento donde se mostrarán los detalles del producto
   const productInfoContainer = document.getElementById('product-info-container');
@@ -23,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .then(data => {
       // Buscar el producto seleccionado por su ID
-      const selectedProduct = data.products.find(product => product.id === parseInt(productID));
+      const selectedProduct = data;
       if (selectedProduct) {
         // Llenar el contenedor con los detalles del producto
         productInfoContainer.innerHTML = `
@@ -31,10 +30,10 @@ document.addEventListener('DOMContentLoaded', function () {
             <h2 class="p-info" id="product-name">${selectedProduct.name}</h2>
             <p>Precio <span id="product-price">${selectedProduct.currency} ${selectedProduct.cost}</span></p>
             <p>Descripción <span id="product-description">${selectedProduct.description}</span></p>
-            <p>Categoría <span id="product-category">${data.catName}</span></p>
+            <p>Categoría <span id="product-category">${data.category}</span></p>
             <p>Cantidad de vendidos <span id="product-soldCount">${selectedProduct.soldCount}</span></p>
             <p>Imágenes ilustrativas</p>
-            <img src="${selectedProduct.image}" alt="${selectedProduct.name}">
+            <div>${selectedProduct.images.map(image => `<img src="${image}" alt="Product Image" class="product-images-individual">`).join('')}</div>
           </div>
         `;
         // Construccion de la box de comentarios 
