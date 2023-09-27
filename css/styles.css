@@ -464,4 +464,10 @@ a .navLink {
   text-decoration: none;
   color: #FFFFFF8C;
 }
-
+/*Estilo de la box de productos relacionados */
+.container2 img {
+  max-height: 240px;
+  padding: 10px;
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 4px;
+}
