@@ -459,4 +459,9 @@ a.custom-card:hover {
   margin-bottom: 15px; /* Espacio entre las estrellas y los campos del formulario */
   cursor: pointer;
   }
+/*Agrega el color gris al menú desplegable que se genera a partir del nombre de usuario*/
+a .navLink {
+  text-decoration: none;
+  color: #FFFFFF8C;
+}
 
