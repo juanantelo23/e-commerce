@@ -465,9 +465,24 @@ a .navLink {
   color: #FFFFFF8C;
 }
 /*Estilo de la box de productos relacionados */
-.container2 img {
-  max-height: 240px;
+#imagenesCarrusel img {
+  height: auto;
   padding: 10px;
   border: 1px solid rgb(204, 204, 204);
   border-radius: 4px;
+  max-width: 100%;
+  vertical-align: middle;
+}
+#containerCarrusel{
+  width: 45%;
+}
+.related-product-image{
+  width: 30%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  padding: 15px;
+}
+.carousel-control-next-icon, .carousel-control-prev-icon {
+  background-color: rgba(128, 128, 128, 0.37);
+  padding: 20px;
 }
