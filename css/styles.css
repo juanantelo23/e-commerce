@@ -486,3 +486,13 @@ a .navLink {
   background-color: rgba(128, 128, 128, 0.37);
   padding: 20px;
 }
+
+.dark-mode {
+  background-color: rgb(28,28,28);
+  color: white;
+}
+
+.dark-mode #categories-container {
+  background-color: rgb(51,51,51);
+  color: rgb(166,166,166);
+}

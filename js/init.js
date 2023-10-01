@@ -39,6 +39,8 @@ let getJSONData = function(url){
         return result;
     });
 }
+let toggleButton;
+
 //Método para imprimir el nombre de usuario en la barra de navegación
 document.addEventListener("DOMContentLoaded", function(){
   var userName = localStorage.getItem("user_name"); //toma los datos guardados en login
@@ -56,15 +58,65 @@ document.addEventListener("DOMContentLoaded", function(){
     <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
     <li><a class="dropdown-item" href="my-profile.html">Mi Perfil</a></li>
     <li><a class="dropdown-item" href="login.html" id="cerrarSesion">Cerrar Sesion</a></li>
+    <li><button class="dropdown-item" id="toggleButton" onclick="toggleFunction()">Dark Mode</button></li>
   </ul>
 </div>
       `; //toma el dato de la variable userName y lo imprime en la top-nav
       document.getElementById('user').appendChild(insertName); //agrega la etiqueta creada como hijo del elemento li
   }
 
-
   document.getElementById("cerrarSesion").addEventListener("click", function(event) {
     localStorage.removeItem("user_name"); //Al dar click en "Cerrar Sesión" elimina el dato de usuario almacenado en el local storage
-  })
+
+  });
+  
+  toggleButton = document.getElementById("toggleButton");  
+  
+  // Obtener la preferencia almacenada en localStorage y aplicarla al cargar la página
+  var savedMode = localStorage.getItem("mode");
+  if (savedMode === "dark-mode") {
+    document.body.classList.add("dark-mode");
+  }
+
+    // Escuchar cambios de almacenamiento local en otras pestañas
+    window.addEventListener("storage", function(event) {
+      if (event.key === "mode") {
+        setButtonText();
+      }
+      });
+
 });
+
+// Toggle button text
+function setButtonText() {
+  var savedMode = localStorage.getItem("mode");
+  if (savedMode === "dark-mode") {
+    toggleButton.innerHTML = "Light Mode";
+  } else {
+    toggleButton.innerHTML = "Dark Mode";
+  }
+}
+
+// Toggle mode
+function toggleFunction() {
+  var element = document.body;
+  var containerCategories = document.getElementById("categories-container");
+
+  element.classList.toggle("dark-mode");
+  
+  // Verifica si containerCategories no es nulo antes de intentar acceder a sus propiedades
+  if (containerCategories) {
+    containerCategories.classList.toggle("dark-mode");
+  }
+
+  if (element.classList.contains("dark-mode")) {
+    localStorage.setItem("mode", "dark-mode");
+  } else {
+    localStorage.setItem("mode", "light-mode");
+  }
+
+  // Cambiamos el texto del botón según el modo actual
+  setButtonText();
+}
+ 
 
