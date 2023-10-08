@@ -496,3 +496,32 @@ a .navLink {
   background-color: rgb(51,51,51);
   color: rgb(166,166,166);
 }
+
+/* Responsive Design */
+.footer .container {
+  display: flex;
+  justify-content: space-between;
+}
+@media (max-width: 768px) {
+  .footer {
+    color: #6c757d;
+  }
+  .footer .container {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+  }
+  .jumbotron {
+    width: 100%;
+    max-height: 300px;
+    background-size: cover;
+    background-position: left;
+  }
+  #containerCarrusel{
+    width: 100%;
+  }
+  .related-product-image {
+    width: 100%;
+  }
+  
+}

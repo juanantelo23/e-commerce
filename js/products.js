@@ -35,9 +35,24 @@ async function getJSONData2(url) {
         });
 }
 
-function showCategoriesList(array) {
-    let htmlContentToAppend = "";
+// Función para agregar o quitar la clase "col-3" en función de la resolución de la pantalla
+function toggleClassBasedOnResolution() {
+    const responsiveMobile = document.querySelectorAll('.col-3');
+    const matchMedia = window.matchMedia("(max-width: 769px)"); // Media query para resolución mayor a 768px
 
+    for (let i = 0; i < responsiveMobile.length; i++) {
+        if (matchMedia.matches) {
+            responsiveMobile[i].classList.remove('col-3');
+        } else {
+            responsiveMobile[i].classList.add('col-3');
+        }
+    }
+}
+
+// Función para mostrar la lista de categorías
+function showCategoriesList(array) {
+    const catListContainer = document.getElementById("cat-list-container");
+    let htmlContentToAppend = "";
 
     for (let i = 0; i < array.length; i++) {
         let product = array[i];
@@ -61,13 +76,13 @@ function showCategoriesList(array) {
         </div>
         `;
     }
-   
-    document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
-    
+
+    catListContainer.innerHTML = htmlContentToAppend;
+    toggleClassBasedOnResolution(); // Llama a la función para ajustar las clases después de cargar la lista
     //Se guarda en un localStorage el ID del producto seleccionado
     const productListItems = document.querySelectorAll('.list-group-item.searching');
-    productListItems.forEach(function(item) {
-        item.addEventListener("click", function() {
+    productListItems.forEach(function (item) {
+        item.addEventListener("click", function () {
             const productId = item.id;
             localStorage.setItem("productID", productId);
             window.location = "product-info.html";
@@ -79,6 +94,15 @@ function showCategoriesList(array) {
 
     return htmlContentToAppend;
 }
+
+// Llama a la función para mostrar la lista de categorías
+showCategoriesList(arrayDeProductos);
+
+// Agrega un oyente para cambiar las clases cuando se redimensiona la ventana
+window.addEventListener('resize', toggleClassBasedOnResolution);
+
+
+
 
 
 
