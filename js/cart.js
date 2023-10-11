@@ -19,20 +19,21 @@
                             <img src="${item.image}" alt="${item.name}" style="width: 100px;">
                         </div>
                         <div class="col-md-2">
-                            <div class="sub-title">Nombre:</div>
+                            <div class="sub-title fw-bold">Nombre:</div>
                             <div>${item.name}</div>
                         </div>
                         <div class="col-md-2">
-                            <div class="sub-title">Costo:</div>
+                            <div class="sub-title fw-bold">Costo:</div>
                             <div>${item.unitCost} ${item.currency}</div>
                         </div>
                         <div class="col-md-2">
-                            <div class="sub-title">Cantidad:</div>
-                            <input type="number" class="form-control" value="1" id="cantidad-${item.id}" min="1" max="99">
+                            <div class="sub-title fw-bold ">Cantidad:</div>
+                            <div class="col-6"><input type="number" class="form-control" value="1" id="cantidad-${item.id}" min="1" max="99">
+                            </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 fw-bold">
                     <div class="sub-title">Sub total:</div>
-                    <div class="font-weight-bold" id="subtotal-${item.id}"> ${item.unitCost} ${item.currency}</div>
+                    <div class="font-weight-bold" id="subtotal-${item.id}"> ${item.currency} ${item.unitCost} </div>
                         </div>
                     </div>
                     <hr class="divider">
@@ -42,12 +43,12 @@
 
                // Agrega el evento input para cada input
                const cantidadInput = document.getElementById(`cantidad-${item.id}`);
-               const subtotalSpan = document.getElementById(`subtotal-${item.id}`);
+               const subtotalDiv = document.getElementById(`subtotal-${item.id}`);
                cantidadInput.addEventListener("input", function() {
                    const cantidad = cantidadInput.value
                    const precio = item.unitCost;
                    const subtotal = cantidad * precio;
-                   subtotalSpan.textContent = `${subtotal} ${item.currency}`;
+                   subtotalDiv.textContent = `${item.currency} ${subtotal} `;
                });
            });
        })
