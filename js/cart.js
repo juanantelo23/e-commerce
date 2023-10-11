@@ -28,21 +28,31 @@
                         </div>
                         <div class="col-md-2">
                             <div class="sub-title">Cantidad:</div>
-                            <div><input type="number" class="form-control" value="${item.count}" disabled></div>
+                            <input type="number" class="form-control" value="1" id="cantidad-${item.id}" min="1" max="99">
                         </div>
                         <div class="col-md-2">
                     <div class="sub-title">Sub total:</div>
-                    <div class="font-weight-bold">${item.unitCost * item.count} ${item.currency}</div>
+                    <div class="font-weight-bold" id="subtotal-${item.id}"> ${item.unitCost} ${item.currency}</div>
                         </div>
                     </div>
                     <hr class="divider">
                 `;
                     // Insertar el HTML en el contenedor del carrito
                     cartContainer.innerHTML += productHTML;
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+
+               // Agrega el evento input para cada input
+               const cantidadInput = document.getElementById(`cantidad-${item.id}`);
+               const subtotalSpan = document.getElementById(`subtotal-${item.id}`);
+               cantidadInput.addEventListener("input", function() {
+                   const cantidad = cantidadInput.value
+                   const precio = item.unitCost;
+                   const subtotal = cantidad * precio;
+                   subtotalSpan.textContent = `${subtotal} ${item.currency}`;
+               });
+           });
+       })
+       .catch(error => {
+           console.error('Error:', error);
+       });
     });
     
