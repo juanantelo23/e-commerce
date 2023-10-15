@@ -58,8 +58,6 @@
       });
       */
 
-
-
      //USAMOS EL JSON DE PRODUCTS-INFO MOMENTÁNEAMENTE  HASTA OBTENER EL ORIGINAL DE CART
      //DEJAR EL CÓDIGO COMENTADO DE ARRIBA NO ELIMMINAR LO USAREMOS UNA VEZ QUE TENGAMOS EL URL REAL
       const compras = localStorage.getItem("listaCompra");
@@ -98,8 +96,7 @@
        
        `;
 
-       cartContainer.innerHTML += htmlContentToAppend;
-       
+cartContainer.innerHTML += htmlContentToAppend;
 
         // Agrega el evento input para cada input
         const cantidadInput = document.getElementById(`cantidad-${item.id}`);
@@ -110,28 +107,5 @@
             const subtotal = cantidad * precio; //Constante que almacena la suma del total
             subtotalDiv.textContent = `${item.currency} ${subtotal} `;
         });
+}});   
 
-        
-      }
-
-      
-   
-   });   
-
-
-
-
-  
-   
-  
-
-       
-   
-      
-
-       
-
-
-
-
-  
