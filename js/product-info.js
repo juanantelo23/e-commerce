@@ -217,27 +217,46 @@ document.addEventListener('DOMContentLoaded', function () {
       const listaCompra = JSON.parse(localStorage.getItem("listaCompra")) || []; 
   
       fetch(`https://japceibal.github.io/emercado-api/products/${identificador}.json`)
-          .then(response => {
-              if (!response.ok) {
-                  throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-              return response.json();
-          }) 
-          .then(data => {
-              // Verificar si el producto ya está en la lista
-              const productoExistente = listaCompra.some(item => item.id === data.id);
-  
-              if (!productoExistente) {
-                  listaCompra.push(data);
-                  alert("PRODUCTO AGREGADO AL CARRITO")
-                  
-              } else {
-                  alert("El producto ya está en la lista.");
-              }
-              localStorage.setItem("listaCompra", JSON.stringify(listaCompra));
-          })
-          .catch(error => {
-              console.error('Error:', error);
-          });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    }) 
+    .then(data => {
+        // Verificar si el producto ya está en la lista
+        const productoExistente = listaCompra.some(item => item.id === data.id);
+
+        if (!productoExistente) {
+            listaCompra.push(data);
+            // Mostrar alerta de éxito
+            showAlert('Producto agregado al carrito', 'success');
+        } else {
+            // Mostrar alerta de advertencia
+            showAlert('El producto ya está en la lista.', 'warning');
+        }
+        localStorage.setItem("listaCompra", JSON.stringify(listaCompra));
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Mostrar alerta de error
+        showAlert('Hubo un error al procesar la solicitud.', 'danger');
+    });
+
+function showAlert(message, type) {
+    const alertDiv = document.createElement('div');
+    alertDiv.classList.add('alert', `alert-${type}`);
+    alertDiv.textContent = message;
+
+    // Agrega la alerta al DOM
+    const container = document.querySelector('.container');
+    container.appendChild(alertDiv);
+
+    // Elimina la alerta después de 3 segundos
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 2000);
+}
+
   }
   
