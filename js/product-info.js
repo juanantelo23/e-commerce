@@ -23,47 +23,34 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
             const selectedProduct = data;
-          if (selectedProduct) {
+            if (selectedProduct) {
                 // Llenar el contenedor con los detalles del producto
-                  productInfoContainer.innerHTML = `
-                  <div class="container-fluid product-info">
-                  <div class= "row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                  <h2 class="p-info" id="product-name">${selectedProduct.name}</h2>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                  <div class="container mt-5 d-grid gap-2 d-md-flex justify-content-md-end"> 
-                  
-                  <!--El siguiente botón usa un evento onclick para ejecutar la función "agregarProducto"-->
-                  <button type="button" class="btn btn-primary" onclick="agregarProducto(${selectedProduct.id})" id="boton">Comprar</button>
-          
-                  </div>
-                  </div>
-                 
-                  </div>
-                  <div class="container mt-5 d-grid gap-2 d-md-flex justify-content-md-end"> 
-              <a href="/products.html" class="btn  text-decoration-none"> 
-              <i class="fas fa-arrow-left"></i> Volver al Listado 
-              </a> 
-              </div>
-              
-                  <p>Precio <span id="product-price">${selectedProduct.currency} ${selectedProduct.cost}</span></p>
-                  <p>Descripción <span id="product-description">${selectedProduct.description}</span></p>
-                  <p>Categoría <span id="product-category">${selectedProduct.category}</span></p>
-                  <p>Cantidad de vendidos <span id="product-soldCount">${selectedProduct.soldCount}</span></p>
-                  <p>Imágenes ilustrativas</p>
-              </div>
-          `;
-  
-          //Espacio para la funcion del boton que nos lleva a agregar al carrito (id="agregarAlCarrito")
-  
-    // Obtener el ID del producto almacenado en localStorage
-    //const productID = localStorage.getItem('productID'); (SE PUEDE REUTILIZAR)
-    
-  //agregarAlCarrito.addEventListener('click', function (event) { (PARA EMPEZAR)
-  
-  
-  
+                    productInfoContainer.innerHTML = `
+                    <div class="container-fluid product-info">
+                    <div class= "row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                    <h2 class="p-info" id="product-name">${selectedProduct.name}</h2>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="container mt-5 d-grid gap-2 d-md-flex justify-content-md-end"> 
+                    <!--El siguiente botón usa un evento onclick para ejecutar la función "agregarProducto"-->
+                    <button type="button" class="btn btn-primary" onclick="agregarProducto(${selectedProduct.id})" id="boton">Comprar</button>
+                </div>
+                </div>
+                </div>
+                <div class="container mt-5 d-grid gap-2 d-md-flex justify-content-md-end"> 
+                <a href="products.html" class="btn  text-decoration-none"> 
+                <i class="fas fa-arrow-left"></i> Volver al Listado 
+                </a> 
+                </div>
+                    <p>Precio <span id="product-price">${selectedProduct.currency} ${selectedProduct.cost}</span></p>
+                    <p>Descripción <span id="product-description">${selectedProduct.description}</span></p>
+                    <p>Categoría <span id="product-category">${selectedProduct.category}</span></p>
+                    <p>Cantidad de vendidos <span id="product-soldCount">${selectedProduct.soldCount}</span></p>
+                    <p>Imágenes ilustrativas</p>
+                </div>
+            `;
+
                 // Construir el carrusel con las imágenes del producto
                 let htmlContentToAppend = '';
                 for (let i = 0; i < data.images.length; i++) {
