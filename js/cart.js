@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const compras = localStorage.getItem("listaCompra");
     const listaCompra = JSON.parse(compras);
     const cartContainer = document.getElementById('cartContainer');
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Verificar si los elementos se han encontrado correctamente
         if (cantidadInput && subtotalDiv) {
             // Agregar un evento 'input' al elemento de cantidad
-            cantidadInput.addEventListener("input", function() {
+            cantidadInput.addEventListener("input", function () {
                 const cantidad = parseInt(cantidadInput.value, 10) || 0; // Obtener la cantidad como un número entero
                 const precio = item.cost;
                 const subtotal = cantidad * precio; // Calcular el subtotal
@@ -59,4 +59,31 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('No se encontraron los elementos de cantidad y subtotal.');
         }
     }
+
+    // Forma de Pago
+    const formaDePagoLink = document.getElementById('formaDePagoLink')
+    const formaDePagoDiv = document.getElementById('formaDePagoDiv')
+
+    const exampleModal = document.getElementById('exampleModal')
+    if (exampleModal) {
+        exampleModal.addEventListener('show.bs.modal', event => {
+            // Button that triggered the modal
+            const button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            const recipient = button.getAttribute('data-bs-whatever')
+            // If necessary, you could initiate an Ajax request here
+            // and then do the updating in a callback.
+
+            // Update the modal's content.
+            const modalTitle = exampleModal.querySelector('.modal-title')
+            const modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+            modalTitle.textContent = `New message to ${recipient}`
+            modalBodyInput.value = recipient
+        })
+    }
+
 });
+
+
+

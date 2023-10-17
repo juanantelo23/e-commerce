@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,6 +10,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
@@ -35,51 +37,101 @@
   </nav>
   <main>
     <div class="container">
-        <blockquote class="blockquote pt-3 text-center">
-          <h1 class="p-4">Carrito de compras</h1>
-        </blockquote>
-        <h3 class="text-left text-secondary p-4">Artículos a comprar</h3>
-        <div id="cartContainer"></div>
-      
+      <blockquote class="blockquote pt-3 text-center">
+        <h1 class="p-4">Carrito de compras</h1>
+      </blockquote>
+      <h3 class="text-left text-secondary p-4">Artículos a comprar</h3>
+      <div id="cartContainer"></div>
+
       <div class="row">
-          <div class="col-md-6">
-              <h3 class="text-left text-secondary p-3s">Tipo de envío</h3>
-              <br>
-              <div class="form-group">
-                  <input type="radio" id="premium" name="type">
-                  <label for="premium">Premium 2 a 5 días(15%)</label><br>
-                  <input type="radio" id="express" name="type">
-                  <label for="express">Express 5 a 8 días(7%)</label><br>
-                  <input type="radio" id="standard" name="type">
-                  <label for="standard">Standard 12 a 15 días(5%)</label>
-              </div>
-              <br>
-              <div class="row p-3">
-                <h3 class="text-left text-secondary p-3">Dirección de envío</h3>
-                <div class="col-6 form-group">
-                    <label for="street">Calle</label>
-                    <input type="text" class="form-control" id="street"><br>
-                  </div>
-                    <div class="col-6 form-group">
-                    <label for="number">Número</label>
-                    <input type="number" class="form-control" id="number"><br>
-                </div>
-                <div class="col-6 form-group">
-                    <label for="corner">Esquina</label>
-                    <input type="text" class="form-control" id="corner">
-                </div>
-              </div>
+        <div class="col-md-6">
+          <h3 class="text-left text-secondary p-3s">Tipo de envío</h3>
+          <br>
+          <div class="form-group">
+            <input type="radio" id="premium" name="type">
+            <label for="premium">Premium 2 a 5 días(15%)</label><br>
+            <input type="radio" id="express" name="type">
+            <label for="express">Express 5 a 8 días(7%)</label><br>
+            <input type="radio" id="standard" name="type">
+            <label for="standard">Standard 12 a 15 días(5%)</label>
           </div>
+          <br>
+          <div class="row p-3">
+            <h3 class="text-left text-secondary p-3">Dirección de envío</h3>
+            <div class="col-6 form-group">
+              <label for="street">Calle</label>
+              <input type="text" class="form-control" id="street"><br>
+            </div>
+            <div class="col-6 form-group">
+              <label for="number">Número</label>
+              <input type="number" class="form-control" id="number"><br>
+            </div>
+            <div class="col-6 form-group">
+              <label for="corner">Esquina</label>
+              <input type="text" class="form-control" id="corner">
+            </div>
+          </div>
+        </div>
       </div>
       <br>
       <hr>
+
+      <div class="row">
+        <div class="col-6">
+          <h3 class="p-3s">Forma de pago</h3>
+        </div>
+        <div class="row">
+          <p class="col-3 p-3">No ha seleccionado nada</p>
+          <a data-bs-toggle="modal" data-bs-target="#exampleModal"
+          data-bs-whatever="hola" id="formaDePagoLink" class="col-3 p-3" href="#">Seleccionar</a>
+
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Forma de Pago</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                  <form>
+                    <div class="col-md-6">
+                      <label for="inputEmail4" class="form-label">Email</label>
+                      <input type="radio" class="form-control" id="inputEmail4">
+                    </div>
+                    <div class="mb-3">
+                      <label for="recipient-name" class="col-form-label">Recipient:</label>
+                      <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="mb-3">
+                      <label for="message-text" class="col-form-label">Message:</label>
+                      <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          
+        </div>
+      </div>
   </main>
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
     </div>
   </footer>
   <div id="spinner-wrapper">
@@ -94,4 +146,5 @@
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
 </body>
+
 </html>
