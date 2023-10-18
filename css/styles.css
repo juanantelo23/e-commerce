@@ -497,6 +497,9 @@ a .navLink {
   color: rgb(166,166,166);
 }
 
+.form-control {
+  border-radius: 10px;
+}
 /* Responsive Design */
 .footer .container {
   display: flex;

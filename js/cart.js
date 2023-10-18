@@ -61,9 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Forma de Pago
-    const formaDePagoLink = document.getElementById('formaDePagoLink')
-    const formaDePagoDiv = document.getElementById('formaDePagoDiv')
-
     const exampleModal = document.getElementById('exampleModal')
     if (exampleModal) {
         exampleModal.addEventListener('show.bs.modal', event => {
@@ -78,10 +75,44 @@ document.addEventListener('DOMContentLoaded', function () {
             const modalTitle = exampleModal.querySelector('.modal-title')
             const modalBodyInput = exampleModal.querySelector('.modal-body input')
 
-            modalTitle.textContent = `New message to ${recipient}`
+            modalTitle.textContent = `Forma de pago`
             modalBodyInput.value = recipient
         })
     }
+
+    // Funcion para habilitar y deshabilitar los inputs segun el metodo de pago
+    const formaDePagoTarjeta = document.getElementById('inputPagoTarjeta');
+    const formaDePagoTransferencia = document.getElementById('inputPagoTransferencia');
+    const inputsTarjeta = document.querySelectorAll('.deshabilitarInput');
+    const inputTransferencia = document.getElementById('inputTransferencia');
+
+    function deshabilitarInputs(inputs) {
+        inputs.forEach(input => {
+            input.disabled = true;
+        });
+    }
+
+    function habilitarInputs(inputs) {
+        inputs.forEach(input => {
+            input.disabled = false;
+        });
+    }
+
+    // Metodo de pago transferencia
+    formaDePagoTransferencia.addEventListener('click', event => {
+        if (formaDePagoTransferencia.checked) {
+            deshabilitarInputs(inputsTarjeta);
+            habilitarInputs([inputTransferencia]);
+        }
+    });
+
+    // Metodo de pago tarjeta
+    formaDePagoTarjeta.addEventListener('click', event => {
+        if (formaDePagoTarjeta.checked) {
+            deshabilitarInputs([inputTransferencia]);
+            habilitarInputs(inputsTarjeta);
+        }
+    });
 
 });
 

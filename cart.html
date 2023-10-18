@@ -82,8 +82,8 @@
         </div>
         <div class="row">
           <p class="col-3 p-3">No ha seleccionado nada</p>
-          <a data-bs-toggle="modal" data-bs-target="#exampleModal"
-          data-bs-whatever="hola" id="formaDePagoLink" class="col-3 p-3" href="#">Seleccionar</a>
+          <a data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="hola" id="formaDePagoLink"
+            class="col-3 p-3" href="#">Seleccionar</a>
 
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
@@ -97,31 +97,66 @@
 
                 <div class="modal-body">
                   <form>
+
+                    <!-- Pago con tarjeta -->
                     <div class="col-md-6">
-                      <label for="inputEmail4" class="form-label">Email</label>
-                      <input type="radio" class="form-control" id="inputEmail4">
+                      <input type="radio" name="grupoRadio" id="inputPagoTarjeta">
+                      <label for="inputEmail4" class="form-label">Tarjeta de crédito</label>
                     </div>
-                    <div class="mb-3">
-                      <label for="recipient-name" class="col-form-label">Recipient:</label>
-                      <input type="text" class="form-control" id="recipient-name">
+
+                    <div>
+                      
+                      <div class="p-3 row">
+                        <div class="col-md-5 mb-3">
+                          <label for="recipient-name" class="col-form-label">Número de tarjeta</label>
+                          <input type="text" class="form-control deshabilitarInput" id="recipient-name">
+                        </div>
+                        
+                        <div class="col-md-4">
+                          <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Código de seg.</label>
+                            <input type="text" class="form-control deshabilitarInput" id="codigoSeguridad">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="p-3 row">
+                        <div class="mb-3">
+                          <label id="card-expiration-input-label" class="field-label" data-max="MM / YY0">
+                            Vencimiento (MM/AA)
+                            <input id="card-expiration-input" class="deshabilitarInput form-control baseInputs-0-0-2 emptyInputs-0-0-6" type="text"
+                              pattern="\d*" name="expiration" autocomplete="cc-exp" placeholder="MM/YY" value="">
+                          </label>
+                        </div>
+                      </div>
+
                     </div>
-                    <div class="mb-3">
-                      <label for="message-text" class="col-form-label">Message:</label>
-                      <textarea class="form-control" id="message-text"></textarea>
+                    <hr>
+                    <!-- Transferenica bancaria -->
+                    <div class="col-md-6">
+                      <input type="radio" name="grupoRadio" id="inputPagoTransferencia">
+                      <label for="inputEmail4" class="form-label">Transferencia bancaria</label>
                     </div>
+                    <hr>
+                    <div class="p-3 row">
+                      <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Número de cuenta</label>
+                        <input type="text" class="form-control" id="inputTransferencia">
+                      </div>
+                    </div>
+
                   </form>
                 </div>
 
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Send message</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
 
               </div>
             </div>
           </div>
 
-          
+
         </div>
       </div>
   </main>
