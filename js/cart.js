@@ -3,6 +3,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const listaCompra = JSON.parse(compras);
     const cartContainer = document.getElementById('cartContainer');
     const subtotalGeneralDiv = document.getElementById('Subtotal-General');
+
+    const formaDePagoLink = document.getElementById('formaDePagoLink');
+    const terminos1 = document.getElementById('terminos1');
+    const formaDePagoTarjeta = document.getElementById('inputPagoTarjeta');
+    const formaDePagoTransferencia = document.getElementById('inputPagoTransferencia');
    
     // Verificar si el contenedor del carrito existe
     if (!cartContainer) {
@@ -78,6 +83,44 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     subtotalGeneralDiv.textContent = `${listaCompra[0].currency} ${subtotalGeneral}`;
+
+    if (!formaDePagoTarjeta || !formaDePagoTransferencia) {
+        console.error('No se encontraron los elementos necesarios.');
+        return;
+      }
+    
+      formaDePagoTarjeta.addEventListener('click', function () {
+        deshabilitarInputs([inputTransferencia]);
+        habilitarInputs(inputsTarjeta);
+      });
+    
+      formaDePagoTransferencia.addEventListener('click', function () {
+        deshabilitarInputs(inputsTarjeta);
+        habilitarInputs([inputTransferencia]);
+      });
+
+      const form = document.querySelector('.needs-validation');
+  if (!form) {
+    console.error('No se encontró el formulario.');
+    return;
+  }
+
+  form.addEventListener('submit', function (event) {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    if (!formaDePagoTarjeta.checked && !formaDePagoTransferencia.checked) {
+      event.preventDefault();
+      terminos1.style.display = 'block';
+    } else {
+      terminos1.style.display = 'none';
+    }
+
+    form.classList.add('was-validated');
+  });
+  
 });
 
 
@@ -155,11 +198,4 @@ document.addEventListener('DOMContentLoaded', function () {
         }, false)
       })
   })()
-
-/* Alert compra realizada
-<div class="alert alert-success" role="alert">
-  ¡Has comprado con éxito!
-</div>
-*/
-
 

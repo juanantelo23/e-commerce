@@ -43,7 +43,7 @@
       <h3 class="text-left text-secondary p-4">Artículos a comprar</h3>
       
       <div id="cartContainer"></div>
-    <form class="was-validated">
+    <form class="needs-validation" novalidate>
       <div class="row">
         <div class="col-md-6">
           <h3 class="text-left text-secondary p-3s">Tipo de envío</h3>
@@ -132,7 +132,10 @@
           <p class="col-3 p-3">No ha seleccionado nada</p>
           <a data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="hola" id="formaDePagoLink"
             class="col-3 p-3" href="#">Seleccionar</a>
-
+            <div id="terminos1" class="invalid-feedback">
+              Debe seleccionar una forma de pago. 
+            </div>
+          
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
@@ -144,11 +147,10 @@
                 </div>
 
                 <div class="modal-body">
-                  <form>
 
                     <!-- Pago con tarjeta -->
                     <div class="col-md-6">
-                      <input type="radio" name="grupoRadio" id="inputPagoTarjeta">
+                      <input type="radio" name="grupoRadio" id="inputPagoTarjeta" required>
                       <label for="inputEmail4" class="form-label">Tarjeta de crédito</label>
                     </div>
 
@@ -157,13 +159,13 @@
                       <div class="p-3 row">
                         <div class="col-md-5 mb-3">
                           <label for="recipient-name" class="col-form-label">Número de tarjeta</label>
-                          <input type="text" class="form-control deshabilitarInput" id="recipient-name">
+                          <input type="text" class="form-control deshabilitarInput" id="recipient-name" required>
                         </div>
                         
                         <div class="col-md-4">
                           <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Código de seg.</label>
-                            <input type="text" class="form-control deshabilitarInput" id="codigoSeguridad">
+                            <input type="text" class="form-control deshabilitarInput" id="codigoSeguridad" required>
                           </div>
                         </div>
                       </div>
@@ -173,7 +175,7 @@
                           <label id="card-expiration-input-label" class="field-label" data-max="MM / YY0">
                             Vencimiento (MM/AA)
                             <input id="card-expiration-input" class="deshabilitarInput form-control baseInputs-0-0-2 emptyInputs-0-0-6" type="text"
-                              pattern="\d*" name="expiration" autocomplete="cc-exp" placeholder="MM/YY" value="">
+                              pattern="\d*" name="expiration" autocomplete="cc-exp" placeholder="MM/YY" value="" required>
                           </label>
                         </div>
                       </div>
@@ -182,18 +184,17 @@
                     <hr>
                     <!-- Transferenica bancaria -->
                     <div class="col-md-6">
-                      <input type="radio" name="grupoRadio" id="inputPagoTransferencia">
+                      <input type="radio" name="grupoRadio" id="inputPagoTransferencia" required>
                       <label for="inputEmail4" class="form-label">Transferencia bancaria</label>
                     </div>
                     <hr>
                     <div class="p-3 row">
                       <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Número de cuenta</label>
-                        <input type="text" class="form-control" id="inputTransferencia">
+                        <input type="text" class="form-control" id="inputTransferencia" required>
                       </div>
                     </div>
 
-                  </form>
                 </div>
 
                 <div class="modal-footer">
@@ -226,6 +227,18 @@
       <div></div>
     </div>
   </div>
+
+  <div class="alert alert-success alert-dismissible fade" role="alert" id="alert-success">
+    <p>Datos guardados correctamente</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div class="alert alert-danger alert-dismissible fade" role="alert" id="alert-danger">
+    <p>Los datos ingresados no cumplen con los requisitos solicitados</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+
+
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
