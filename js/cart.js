@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const costoEnvioDiv = document.getElementById('Costo-Envio');
 
     //Tipos de envio
+    const totalDiv = document.getElementById('total-compra');
     const premium = document.getElementById('premium');
     const express = document.getElementById('express');
     const standard = document.getElementById('standard');
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let subtotalGeneral = 0;
     let costoEnvio = 0;
+    let total = 0;
 
     //Funcion para actualizar el valor en funcion de la seleccion
     premium.addEventListener('change', actualizarCostoEnvio);
@@ -39,20 +41,35 @@ document.addEventListener('DOMContentLoaded', function () {
     function actualizarCostoEnvio(){
         costoEnvio = calcularCostoEnvio();
         costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
+
+        actualizarCostoFinal();
     }
 
     //Funcion para calcular costo de envio
     function calcularCostoEnvio() {
         if (document.getElementById('premium').checked) {
-            return subtotalGeneral * 0.15;
+            return Math.round(subtotalGeneral * 0.15);
         } else if (document.getElementById('express').checked) {
-            return subtotalGeneral * 0.07;
+            return Math.round(subtotalGeneral * 0.07);
         } else if (document.getElementById('standard').checked) {
-            return subtotalGeneral * 0.05;
+            return Math.round(subtotalGeneral * 0.05);
         } else {
             return 0;
         }
     }
+
+    //funcion para calcular total 
+    function totalaPagar(envio, producto){
+        return Math.round(producto + envio);
+    }
+
+    //Actualizar total en tiempo real 
+
+    function actualizarCostoFinal(){
+        total = totalaPagar(costoEnvio, subtotalGeneral);
+        totalDiv.textContent = `${listaCompra[0].currency} ${total}`;
+    }
+    
 
    
 
@@ -112,6 +129,9 @@ document.addEventListener('DOMContentLoaded', function () {
         subtotalGeneral += calcularSubtotal(item, 1); // Suponiendo que la cantidad inicial es 1
         costoEnvio = calcularCostoEnvio();
         costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
+        total = totalaPagar(costoEnvio, subtotalGeneral);
+        totalDiv.innerHTML = `${listaCompra[0].currency} ${total}`;
+        
         
 
     }
