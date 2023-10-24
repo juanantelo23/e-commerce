@@ -3,6 +3,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const listaCompra = JSON.parse(compras);
     const cartContainer = document.getElementById('cartContainer');
     const subtotalGeneralDiv = document.getElementById('Subtotal-General');
+    const costoEnvioDiv = document.getElementById('Costo-Envio');
+
+    //Tipos de envio
+    const premium = document.getElementById('premium');
+    const express = document.getElementById('express');
+    const standard = document.getElementById('standard');
 
     const formaDePagoLink = document.getElementById('formaDePagoLink');
     const terminos1 = document.getElementById('terminos1');
@@ -21,9 +27,33 @@ document.addEventListener('DOMContentLoaded', function () {
         return cantidad * precio;
     }
 
-    
+
     let subtotalGeneral = 0;
     let costoEnvio = 0;
+
+    //Funcion para actualizar el valor en funcion de la seleccion
+    premium.addEventListener('change', actualizarCostoEnvio);
+    express.addEventListener('change', actualizarCostoEnvio);
+    standard.addEventListener('change', actualizarCostoEnvio);
+
+    function actualizarCostoEnvio(){
+        costoEnvio = calcularCostoEnvio();
+        costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
+    }
+
+    //Funcion para calcular costo de envio
+    function calcularCostoEnvio() {
+        if (document.getElementById('premium').checked) {
+            return subtotalGeneral * 0.15;
+        } else if (document.getElementById('express').checked) {
+            return subtotalGeneral * 0.07;
+        } else if (document.getElementById('standard').checked) {
+            return subtotalGeneral * 0.05;
+        } else {
+            return 0;
+        }
+    }
+
    
 
     for (let i = 0; i < listaCompra.length; i++) {
@@ -69,8 +99,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     const productCantidad = parseInt(document.getElementById(`cantidad-${product.id}`).value, 10) || 0;
                     return total + calcularSubtotal(product, productCantidad);
                 }, 0);
-
+                
+                
                 subtotalGeneralDiv.textContent = `${item.currency} ${subtotalGeneral}`;
+                
 
             });
         } else {
@@ -78,6 +110,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         subtotalGeneral += calcularSubtotal(item, 1); // Suponiendo que la cantidad inicial es 1
+        costoEnvio = calcularCostoEnvio();
+        costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
         
 
     }
