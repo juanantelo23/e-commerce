@@ -97,6 +97,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="sub-title">Sub total:</div>
                 <div class="font-weight-bold" id="subtotal-${item.id}"> ${item.currency} ${item.cost} </div>
             </div>
+            <div class="col-md-2">
+            <button type="button" class="btn btn-danger eliminar-btn" data-index="${i}">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+            </div>
         </div>
         <hr class="divider">
     `;
@@ -135,6 +140,23 @@ document.addEventListener('DOMContentLoaded', function () {
         
 
     }
+        //BOTON ELIMINAR
+      // Agregar manejadores de eventos para los botones de eliminar
+      const botonesEliminar = document.querySelectorAll('.eliminar-btn');
+      botonesEliminar.forEach(boton => {
+          boton.addEventListener('click', function() {
+              const index = boton.dataset.index;
+              // Eliminar el producto del carrito basado en el índice
+              listaCompra.splice(index, 1);
+              // Eliminar el elemento del DOM que representa el producto
+              boton.parentNode.parentNode.remove();
+              // Actualizar el carrito en el almacenamiento local
+              localStorage.setItem("listaCompra", JSON.stringify(listaCompra));
+          });
+          
+      });
+
+      //FINALIZA BOTON ELIMINAR
 
     subtotalGeneralDiv.textContent = `${listaCompra[0].currency} ${subtotalGeneral}`;
 
