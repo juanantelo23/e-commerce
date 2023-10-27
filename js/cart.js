@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return cantidad * precio;
     }
 
-
     let subtotalGeneral = 0;
     let costoEnvio = 0;
     let total = 0;
@@ -70,9 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
         totalDiv.textContent = `${listaCompra[0].currency} ${total}`;
     }
 
-
-
-
+//Bucle que imprime la informacion de producto
     for (let i = 0; i < listaCompra.length; i++) {
         let item = listaCompra[i];
         const htmlContentToAppend = `
@@ -122,22 +119,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     return total + calcularSubtotal(product, productCantidad);
                 }, 0);
 
-
                 subtotalGeneralDiv.textContent = `${item.currency} ${subtotalGeneral}`;
-
 
             });
         } else {
             console.error('No se encontraron los elementos de cantidad y subtotal.');
         }
-
+//CALCULAR EL SUBTOTAL 
         subtotalGeneral += calcularSubtotal(item, 1); // Suponiendo que la cantidad inicial es 1
         costoEnvio = calcularCostoEnvio();
         costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
         total = totalaPagar(costoEnvio, subtotalGeneral);
         totalDiv.innerHTML = `${listaCompra[0].currency} ${total}`;
-
-
 
     }
     //BOTON ELIMINAR
@@ -146,18 +139,30 @@ document.addEventListener('DOMContentLoaded', function () {
     botonesEliminar.forEach(boton => {
         boton.addEventListener('click', function () {
             const index = boton.dataset.index;
+            
             // Eliminar el producto del carrito basado en el índice
             listaCompra.splice(index, 1);
+            
             // Eliminar el elemento del DOM que representa el producto
             boton.parentNode.parentNode.remove();
+            
             // Actualizar el carrito en el almacenamiento local
             localStorage.setItem("listaCompra", JSON.stringify(listaCompra));
-        });
 
+            // Recalcular el subtotal general y el costo de envío
+            subtotalGeneral = listaCompra.reduce((total, product) => {
+            const productCantidad = parseInt(document.getElementById(`cantidad-${product.id}`).value, 10) || 0;
+            return total + calcularSubtotal(product, productCantidad);
+            }, 0);
+        subtotalGeneralDiv.textContent = `${listaCompra[0].currency} ${subtotalGeneral}`;
+        costoEnvio = calcularCostoEnvio();
+        costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
+        // Actualizar el total
+        actualizarCostoFinal();
+    });
     });
 
     //FINALIZA BOTON ELIMINAR
-
     subtotalGeneralDiv.textContent = `${listaCompra[0].currency} ${subtotalGeneral}`;
 
     if (!formaDePagoTarjeta || !formaDePagoTransferencia) {
@@ -199,7 +204,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-
 // Forma de Pago
 const exampleModal = document.getElementById('exampleModal')
 if (exampleModal) {
@@ -219,13 +223,12 @@ if (exampleModal) {
         modalBodyInput.value = recipient
     })
 }
-
+//Funcionalidad para cuando el usuario elije la forma de pago 
 const formaDePagoTarjeta = document.getElementById('inputPagoTarjeta');
 const formaDePagoTransferencia = document.getElementById('inputPagoTransferencia');
 const inputsTarjeta = document.querySelectorAll('.deshabilitarInput');
 const inputTransferencia = document.getElementById('inputTransferencia');
 const guardarMetodoDePago = document.getElementById('guardarMetodoDePago');
-
 guardarMetodoDePago.addEventListener('click', function () {
     const inputPagos = document.querySelectorAll('.inputPago');
     let valid = true;
@@ -234,22 +237,21 @@ guardarMetodoDePago.addEventListener('click', function () {
             valid = false;
         }
     });
-
-
     const seleccionMetodoDePago = document.getElementById('seleccionMetodoDePago');
-    if (formaDePagoTarjeta.checked) {
+    const InputsDePago = document.querySelector('.InputPagoCheck');
+    const InputDePagoTrans = document.getElementById("inputTransferencia")
+    if (formaDePagoTarjeta.checked && InputsDePago.value !== ""){
         seleccionMetodoDePago.textContent = 'Pago con tarjeta de crédito';
         seleccionMetodoDePago.style.display = 'block';
-    } else if (formaDePagoTransferencia.checked) {
+    } else if (formaDePagoTransferencia.checked && InputDePagoTrans.value !== "") {
         seleccionMetodoDePago.textContent = 'Pago con transferencia';
         seleccionMetodoDePago.style.display = 'block';
-    } else if (inputsvalue) {
+    } else {
         seleccionMetodoDePago.textContent = 'Por favor, elija un método de pago';
         seleccionMetodoDePago.style.display = 'block';
     }
 });
-
-
+// Funcion para deshabilitar campos
 function deshabilitarInputs(inputs) {
     inputs.forEach(input => {
         input.disabled = true;
@@ -279,24 +281,40 @@ formaDePagoTarjeta.addEventListener('click', event => {
     }
 });
 
-
-
 // Validación de form y cambio estilo 
 (function () {
     'use strict'
 
-    var form = document.querySelectorAll('.needs-validation')
+    var form = document.querySelectorAll('.needs-validation');
 
     Array.prototype.slice.call(form)
         .forEach(function (form) {
             form.addEventListener('submit', function (event) {
                 if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    showAlert('Compra finalizada con éxito', 'success');
+                    event.preventDefault();
                 }
+                form.classList.add('was-validated');
+            }, false);
+        });
 
-                form.classList.add('was-validated')
-            }, false)
-        })
-})()
+    //CARTEL DE ALERTA DE FINALIZACION DE PAGO
+    function showAlert(message, type) {
+        const alertDiv = document.createElement('div');
+        alertDiv.classList.add('alert', `alert-${type}`);
+        alertDiv.textContent = message;
+        document.body.appendChild(alertDiv); // Agrega el cartel de alerta al cuerpo del documento
+        // Ocultar la alerta después de 3 segundos (3000 milisegundos)
+        setTimeout(function () {
+            alertDiv.style.display = 'none';
+            window.location.href = "/cart.html"; // Redirecciona a la pagina de principal del carrito
+            localStorage.removeItem('listaCompra');
+        }, 2000); // 2000 milisegundos = 2 segundos
+    };
+})();
+
+
 
