@@ -204,21 +204,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-// Forma de Pago
+// Modal para seleccionar la Forma de Pago 
 const exampleModal = document.getElementById('exampleModal')
 if (exampleModal) {
     exampleModal.addEventListener('show.bs.modal', event => {
-        // Button that triggered the modal
+        // Botón para abrir el modal
         const button = event.relatedTarget
-        // Extract info from data-bs-* attributes
         const recipient = button.getAttribute('data-bs-whatever')
-        // If necessary, you could initiate an Ajax request here
-        // and then do the updating in a callback.
-
-        // Update the modal's content.
+        // Cargar el contenido del modal
         const modalTitle = exampleModal.querySelector('.modal-title')
         const modalBodyInput = exampleModal.querySelector('.modal-body input')
-
         modalTitle.textContent = `Forma de pago`
         modalBodyInput.value = recipient
     })
@@ -310,7 +305,7 @@ formaDePagoTarjeta.addEventListener('click', event => {
         // Ocultar la alerta después de 3 segundos (3000 milisegundos)
         setTimeout(function () {
             alertDiv.style.display = 'none';
-            window.location.href = "/cart.html"; // Redirecciona a la pagina de principal del carrito
+            window.location.href = "cart.html"; // Redirecciona a la pagina de principal del carrito
             localStorage.removeItem('listaCompra');
         }, 2000); // 2000 milisegundos = 2 segundos
     };
