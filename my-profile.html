@@ -52,9 +52,57 @@
   </nav>
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <div>
+        <div class="profile-card">
+          <img src="/img/img_perfil.png" class="card-img-top profile-card" alt="..." id="profile-img">
+          <div class="card-body">
+          </div>
+        </div>
       </div>
+      <div class= "text-center p-5" id="user-profile">
+        <h4>Perfil</h4>
+      </div>
+      <div>
+      <form class="row g-4">
+        <div class="col-md-6">
+          <label for="validationDefault01" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="validationDefault01" required>
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault01" class="form-label">Segundo Nombre</label>
+          <input type="text" class="form-control" id="validationDefault01" >
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault02" class="form-label">Apellido</label>
+          <input type="text" class="form-control" id="validationDefault02" required>
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault02" class="form-label">Segundo Apellido</label>
+          <input type="text" class="form-control" id="validationDefault02">
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefaultUsername" class="form-label">Correo electrónico</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" required>
+            <span class="input-group-text" id="inputGroupPrepend2">@mail.com</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault03" class="form-label">Telefono de contacto</label>
+          <input type="number" class="form-control" id="validationDefault03">
+        </div>
+        <div class="col-md-6"><div class="input-group mb-3">
+          <input type="file" class="form-control" id="inputGroupFile02">
+          <label class="input-group-text" for="inputGroupFile02">Upload</label>
+        </div>
+        </div>
+        <div class="col-12">
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit">Guardar cambios</button>
+        </div>
+      </form>
+    </div>
     </div>
   </main>
   <footer class="text-muted">

@@ -536,3 +536,17 @@ a .navLink {
   left: 50%;
   transform: translate(-50%, 0);
 }
+
+#profile-form{
+  padding-left: 10%;
+  padding-right: 10%;
+}
+#profile-form input{
+  padding: 3%;
+}
+
+#profile-img{
+  max-width: 100px;  
+  float: right;
+  margin: 4%;
+}
