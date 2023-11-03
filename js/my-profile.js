@@ -32,4 +32,35 @@ Array.prototype.slice.call(forms)
             }, false);
         });
 
-});
+        const signupForm = document.getElementById("signupForm");
+        signupForm.addEventListener('submit', (e) => {
+            console.log('Evento submit disparado');
+            e.preventDefault();
+            const name = document.querySelector('.firstName').value;
+            const secondName = document.querySelector('.secondName').value;
+            const lastName = document.querySelector('.lastName').value;
+            const secondLastName = document.querySelector('.secondLastName').value;
+            const telefono = document.querySelector('.telefono').value;
+            const fotoDePerfil = document.querySelector('.fotoDePerfil').value;
+            const mail = localStorage.getItem('user_name');
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+        
+            const isUserRegistered = users.find(user => user.mail === mail);
+            if (isUserRegistered) {
+            return alert('El usuario ya está registrado!');
+            }
+            users.push({
+                name: name,
+                mail: mail,
+                secondName: secondName,
+                lastName: lastName,
+                secondLastName: secondLastName,
+                telefono: telefono,
+                fotoDePerfil: fotoDePerfil
+            });
+        
+            localStorage.setItem("users", JSON.stringify(users));
+            alert('Registro Exitoso!');
+            window.location.href = 'my-profile.html';
+        });
+    });
