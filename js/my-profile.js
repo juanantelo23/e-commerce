@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const usuarioGuardado = localStorage.getItem("user_name");
+    //funcion que mantiene el usuario seleccionado en el mail 
     const inputUsuarioGuardado = document.getElementById("validationDefaultUsername");
     if (usuarioGuardado) {
         inputUsuarioGuardado.value = usuarioGuardado;
@@ -14,11 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
             alertDiv.style.display = 'none';
         }, 2000); // 2000 milisegundos = 2 segundos
-    };
+    }
 
-// Validación para completar el formulario
-const forms = document.querySelectorAll('.needs-validation');
-Array.prototype.slice.call(forms)
+    // Validación para completar el formulario
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.prototype.slice.call(forms)
         .forEach(function (form) {
             form.addEventListener('submit', function (event) {
                 if (!form.checkValidity()) {
@@ -31,36 +32,39 @@ Array.prototype.slice.call(forms)
                 form.classList.add('was-validated');
             }, false);
         });
-
-        const signupForm = document.getElementById("signupForm");
-        signupForm.addEventListener('submit', (e) => {
-            console.log('Evento submit disparado');
-            e.preventDefault();
-            const name = document.querySelector('.firstName').value;
-            const secondName = document.querySelector('.secondName').value;
-            const lastName = document.querySelector('.lastName').value;
-            const secondLastName = document.querySelector('.secondLastName').value;
-            const telefono = document.querySelector('.telefono').value;
-            const fotoDePerfil = document.querySelector('.fotoDePerfil').value;
-            const mail = localStorage.getItem('user_name');
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-        
-            const isUserRegistered = users.find(user => user.mail === mail);
-            if (isUserRegistered) {
-            return alert('El usuario ya está registrado!');
+        //Funcion que no paso Juan para guardar el perfil actualizado, pero no funciona. Quedo para arreglar.
+        function SaveProfile() {
+            const firstName = document.getElementById("name").value;
+            const segundoNombre = document.getElementById("secondName").value;
+            const apellido = document.getElementById("surName").value;
+            const segundoApellido = document.getElementById("secondSurname").value;
+            const email = document.getElementById("emailInp").value;
+            const number = document.getElementById("number").value;
+            if (Validar(firstName, segundoNombre, apellido, segundoApellido, email, number)) {
+                let perfil = {
+                    nombre: firstName,
+                    segundoNombre: segundoNombre,
+                    apelldo: apellido,
+                    segApellido: segundoApellido,
+                    email: email,
+                    celu: number
+                };
+                localStorage.setItem("perfil", JSON.stringify(perfil));
+                alert('Datos guardados correctamente');
             }
-            users.push({
-                name: name,
-                mail: mail,
-                secondName: secondName,
-                lastName: lastName,
-                secondLastName: secondLastName,
-                telefono: telefono,
-                fotoDePerfil: fotoDePerfil
-            });
-        
-            localStorage.setItem("users", JSON.stringify(users));
-            alert('Registro Exitoso!');
-            window.location.href = 'my-profile.html';
-        });
-    });
+            else {
+                alert('Faltan datos');
+            }
+            console.log(perfil.email)
+        };
+
+
+
+
+
+
+
+
+
+
+});
