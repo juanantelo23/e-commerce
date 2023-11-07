@@ -32,39 +32,44 @@ document.addEventListener("DOMContentLoaded", function () {
                 form.classList.add('was-validated');
             }, false);
         });
-        //Funcion que no paso Juan para guardar el perfil actualizado, pero no funciona. Quedo para arreglar.
-        function SaveProfile() {
-            const firstName = document.getElementById("name").value;
-            const segundoNombre = document.getElementById("secondName").value;
-            const apellido = document.getElementById("surName").value;
-            const segundoApellido = document.getElementById("secondSurname").value;
-            const email = document.getElementById("emailInp").value;
-            const number = document.getElementById("number").value;
-            if (Validar(firstName, segundoNombre, apellido, segundoApellido, email, number)) {
-                let perfil = {
-                    nombre: firstName,
-                    segundoNombre: segundoNombre,
-                    apelldo: apellido,
-                    segApellido: segundoApellido,
-                    email: email,
-                    celu: number
-                };
-                localStorage.setItem("perfil", JSON.stringify(perfil));
-                alert('Datos guardados correctamente');
-            }
-            else {
-                alert('Faltan datos');
-            }
-            console.log(perfil.email)
-        };
+    //Funcion que no paso Juan para guardar el perfil actualizado, pero no funciona. Quedo para arreglar.
 
-
-
-
-
-
-
-
-
-
+    const guardarCambios = document.getElementById('signupForm');
+    guardarCambios.addEventListener('click', SaveProfile());
 });
+var perfil = {
+    nombre: "",
+    segundoNombre: "",
+    apellido: "",
+    segApellido: "",
+    email: "",
+    celu: ""
+};
+
+function SaveProfile() {
+    let firstName = document.getElementsByClassName("name");
+    let segundoNombre = document.getElementsByClassName("secondName");
+    let apellido = document.getElementsByClassName("surName");
+    let segundoApellido = document.getElementsByClassName("secondSurname");
+    let email = document.getElementsByClassName("emailInp");
+    let number = document.getElementsByClassName("number");
+    
+    
+
+    for (let i = 0; i < firstName.length; i++) {
+        if (firstName[i].value || segundoNombre[i].value || apellido[i].value || segundoApellido[i].value || email[i].value || number[i].value) {
+            perfil.nombre = firstName[i].value;
+            perfil.segundoNombre = segundoNombre[i].value;
+            perfil.apellido = apellido[i].value;
+            perfil.segApellido = segundoApellido[i].value;
+            perfil.email = email[i].value;
+            perfil.celu = number[i].value;
+            alert('Datos guardados correctamente');
+        } else {
+            alert('Faltan datos');
+        }
+    }
+    localStorage.setItem("perfil", JSON.stringify(perfil));
+
+};
+console.log(perfil)
