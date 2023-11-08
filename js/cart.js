@@ -65,9 +65,14 @@ document.addEventListener('DOMContentLoaded', function () {
     //Actualizar total en tiempo real 
 
     function actualizarCostoFinal() {
-        total = totalaPagar(costoEnvio, subtotalGeneral);
-        totalDiv.textContent = `${listaCompra[0].currency} ${total}`;
-    }
+    subtotalGeneral = listaCompra.reduce((total, product) => {
+        const productCantidad = parseInt(document.getElementById(`cantidad-${product.id}`).value, 10) || 0;
+        return total + calcularSubtotal(product, productCantidad);
+    }, 0);
+
+    total = totalaPagar(costoEnvio, subtotalGeneral);
+    totalDiv.textContent = `${listaCompra[0].currency} ${total}`;
+}
 
 //Bucle que imprime la informacion de producto
     for (let i = 0; i < listaCompra.length; i++) {
@@ -119,6 +124,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     return total + calcularSubtotal(product, productCantidad);
                 }, 0);
 
+                total = actualizarCostoEnvio();
+
                 subtotalGeneralDiv.textContent = `${item.currency} ${subtotalGeneral}`;
 
             });
@@ -149,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Actualizar el carrito en el almacenamiento local
             localStorage.setItem("listaCompra", JSON.stringify(listaCompra));
 
+
             // Recalcular el subtotal general y el costo de envío
             subtotalGeneral = listaCompra.reduce((total, product) => {
             const productCantidad = parseInt(document.getElementById(`cantidad-${product.id}`).value, 10) || 0;
@@ -159,11 +167,12 @@ document.addEventListener('DOMContentLoaded', function () {
         costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
         // Actualizar el total
         actualizarCostoFinal();
+
     });
     });
 
     //FINALIZA BOTON ELIMINAR
-    subtotalGeneralDiv.textContent = `${listaCompra[0].currency} ${subtotalGeneral}`;
+    subtotalGeneralDiv.innerHTML = `${listaCompra[0].currency} ${subtotalGeneral}`;
 
     if (!formaDePagoTarjeta || !formaDePagoTransferencia) {
         console.error('No se encontraron los elementos necesarios.');
