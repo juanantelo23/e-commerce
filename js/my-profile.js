@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 form.classList.add('was-validated');
             }, false);
         });
+
 //Función para guardar cambios en el perfil
         const guardarCambios = document.getElementById('signupForm');
         guardarCambios.addEventListener('click', SaveProfile);
@@ -87,9 +88,50 @@ document.addEventListener("DOMContentLoaded", function () {
             };
         };
 
+     // Funcionalidad de guardar una foto de perfil.
+    const fotoDePerfil = document.getElementById('profile-img');
+    const inputImgFile = document.getElementById('inputGroupFile02');
+
+    function guardarFotoPerfil() {
+        const file = inputImgFile.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const imageUrl = event.target.result;
+                fotoDePerfil.src = imageUrl;
+                // Guardar la URL de la imagen en el Local Storage
+                localStorage.setItem("fotoPerfil", imageUrl);
+                showAlert('Foto de perfil actualizada', 'success');
+            };
+            reader.readAsDataURL(file);
+        } else {
+            showAlert('Selecciona una foto', 'danger');
+        }
+    };
+
+    guardarCambios.addEventListener('click', function(event) {
+        // Primero, guardar la foto de perfil
+        guardarFotoPerfil();
+        
+        // Luego, guardar los datos del perfil en el Local Storage
+        SaveProfile();
+
+        // Evitar que el formulario se envíe y recargue la página
+        event.preventDefault();
+    });
+
+    // Cargar la foto de perfil al cargar la página
+const fotoPerfilGuardada = localStorage.getItem("fotoPerfil");
+if (fotoPerfilGuardada) {
+    fotoDePerfil.src = fotoPerfilGuardada;
+} else {
+    // Si no hay foto de perfil guardada, mostrar la imagen de base
+    fotoDePerfil.src = "../img/img_perfil.png";
+};
 // Función para cerrar sesión (borrar datos del Local Storage)
 function borrarSesion() {
     localStorage.removeItem("perfil");
+    localStorage.removeItem("fotoPerfil"); // Eliminar la foto de perfil del Local Storage
     // También puedes limpiar los campos de input si lo deseas
     primerNombre.value = "";
     segundoNombre.value = "";
@@ -97,11 +139,10 @@ function borrarSesion() {
     segundoApellido.value = "";
     email.value = "";
     numeroTelefono.value = "";
+    fotoDePerfil.src = "../img/img_perfil.png"; // Mostrar la imagen de base
     showAlert('Sesión cerrada, datos eliminados', 'info');
-}
-// Llamar a la función cerrarSesion cuando el usuario haga clic en el botón de cerrar sesión
+};
+// Llamar a la función borrarSesion cuando el usuario haga clic en el botón de cerrar sesión
 const botonBorrarSesion = document.getElementById('cerrarSesionId');
 botonBorrarSesion.addEventListener('click', borrarSesion);
-
-
 });
