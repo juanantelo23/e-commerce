@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function(){
   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
     <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
     <li><a class="dropdown-item" href="my-profile.html">Mi Perfil</a></li>
-    <li><a class="dropdown-item" href="login.html" id="cerrarSesion">Cerrar Sesion</a></li>
+    <li><a class="dropdown-item" href="login.html" id="cerrarSesionId">Cerrar Sesion</a></li>
     <li><button class="dropdown-item" id="toggleButton" onclick="toggleFunction()">Dark Mode</button></li>
   </ul>
 </div>
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function(){
       document.getElementById('user').appendChild(insertName); //agrega la etiqueta creada como hijo del elemento li
   }
 
-  document.getElementById("cerrarSesion").addEventListener("click", function(event) {
+  document.getElementById("cerrarSesionId").addEventListener("click", function(event) {
     localStorage.removeItem("user_name"); //Al dar click en "Cerrar Sesión" elimina el dato de usuario almacenado en el local storage
 
   });
