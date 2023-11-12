@@ -156,24 +156,32 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
 
-    //BOTON ELIMINAR
+   // BOTON ELIMINAR
     const botonesEliminar = document.querySelectorAll('.eliminar-btn');
     botonesEliminar.forEach(boton => {
         boton.addEventListener('click', function () {
             const index = boton.dataset.index;
-    
-            // Eliminar el producto del carrito basado en el índice
+
+
+           // Eliminar el producto del carrito basado en el índice
             listaCompra.splice(index, 1);
-    
-            // Eliminar el elemento del DOM que representa el producto
+
+
+           // Eliminar el elemento del DOM que representa el producto
             const productRow = boton.parentNode.parentNode;
-            const divider = productRow.nextElementSibling; // Obtener el <hr> siguiente a la fila del producto
+           const divider = productRow.nextElementSibling; // Obtener el <hr> siguiente a la fila del producto
             productRow.remove();
             divider.remove();
-    
-            // Actualizar el carrito en el almacenamiento local
+
+
+           // Clear subtotal, costo de envío, and total
+            subtotalGeneralDiv.textContent = '';
+            costoEnvioDiv.textContent = '';
+            totalDiv.textContent = '';
+
+
+           // Actualizar el carrito en el almacenamiento local
             localStorage.setItem("listaCompra", JSON.stringify(listaCompra));
-    
             // Recalcular el subtotal general y el costo de envío
             subtotalGeneral = listaCompra.reduce((total, product) => {
                 const productCantidad = parseInt(document.getElementById(`cantidad-${product.id}`).value, 10) || 0;
@@ -182,10 +190,13 @@ document.addEventListener('DOMContentLoaded', function () {
             subtotalGeneralDiv.textContent = `${listaCompra[0].currency} ${subtotalGeneral}`;
             costoEnvio = calcularCostoEnvio();
             costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
-            // Actualizar el total
+
+
+           // Actualizar el total
             actualizarCostoFinal();
         });
     });
+
 
 
  // Sección final del código que realiza acciones después de configurar el carrito y los eventos
