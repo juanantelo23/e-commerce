@@ -29,6 +29,8 @@ const segundoApellido = document.getElementById("validationDefault03");
 const email = document.getElementById("validationDefaultUsername");
 const numeroTelefono = document.getElementById("validationDefault05");
 
+const noObligatorio = document.querySelectorAll(".noObligatorio");
+
 // Función para cargar datos del perfil en los campos de input
 function cargarDatosPerfil() {
     const perfilGuardado = JSON.parse(localStorage.getItem("perfil"));
@@ -61,6 +63,10 @@ function saveProfile() {
     }
 }
 
+
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOMContentLoaded event fired");
     const usuarioGuardado = localStorage.getItem("user_name");
@@ -71,24 +77,10 @@ document.addEventListener("DOMContentLoaded", function () {
         inputUsuarioGuardado.value = usuarioGuardado;
     }
 
-    // Validación para completar el formulario
-    const formularioPerfil = document.querySelector('.needs-validation');
-    formularioPerfil.addEventListener('submit', function (event) {
-        event.preventDefault();
-        formularioPerfil.classList.add('was-validated');
-
-        if (!formularioPerfil.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-        } else {
-            showAlert('Datos actualizados', 'success');
-        }
-    }, false);
-
+    
     // Asignar evento al botón de guardar cambios
     const guardarCambios = document.getElementById('signupForm');
-    guardarCambios.addEventListener('click', saveProfile);
-
+   
     // Función para cargar datos del perfil al cargar la página
     cargarDatosPerfil();
 
@@ -112,18 +104,42 @@ document.addEventListener("DOMContentLoaded", function () {
             showAlert('Selecciona una foto', 'danger');
         }
     }
-
+    
     guardarCambios.addEventListener('click', function (event) {
-        // Primero, guardar la foto de perfil
-        guardarFotoPerfil();
-
-        // Luego, guardar los datos del perfil en el Local Storage
-        saveProfile();
-
         // Evitar que el formulario se envíe y recargue la página
         event.preventDefault();
-    });
+        
+        const formularioPerfil = document.querySelector('.needs-validation');
+        
+        
+        //iterar sobre cada elemento del formulario, si está vacío agrega la clase Invalido
+        formularioPerfil.querySelectorAll('.form-control').forEach(input => {
+            if (input.value === "") {
+                input.classList.add("is-invalid");
+                
+            } else {
+                input.classList.remove("is-invalid"); 
+                input.classList.add("is-valid");
+            }
+          
+        });
 
+        //discriminar aquellos campos que no son obligatorios pero que fueron asignados a la clase 
+        noObligatorio.forEach(input => {
+            input.classList.remove("is-invalid");
+            input.classList.add("is-valid");
+        });
+    
+        // Primero, guardar la foto de perfil
+        guardarFotoPerfil();
+    
+        // Luego, guardar los datos del perfil en el Local Storage
+        saveProfile();
+    
+        // Validar el formulario después de realizar los cambios
+        validarFormulario();
+    });
+    
     // Cargar la foto de perfil al cargar la página
     const fotoPerfilGuardada = localStorage.getItem("fotoPerfil");
     if (fotoPerfilGuardada) {
