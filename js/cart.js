@@ -113,11 +113,13 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
         <hr class="divider">
     `;
+
 // Agregar el contenido HTML al contenedor del carrito
         cartContainer.insertAdjacentHTML('beforeend', htmlContentToAppend);
 
         const cantidadInput = document.getElementById(`cantidad-${item.id}`);
         const subtotalDiv = document.getElementById(`subtotal-${item.id}`);
+
 // Obtener referencias a los elementos de cantidad y subtotal del producto
         if (cantidadInput && subtotalDiv) {
             cantidadInput.addEventListener("input", function () {
@@ -131,8 +133,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     const productCantidad = parseInt(document.getElementById(`cantidad-${product.id}`).value, 10) || 0;
                     return total + calcularSubtotal(product, productCantidad);
                 }, 0);
+
 // Actualizar el costo total del carrito, incluyendo el costo de envío
                 total = actualizarCostoEnvio();
+
 // Actualizar la visualización del subtotal general en la página
                 subtotalGeneralDiv.textContent = `${item.currency} ${subtotalGeneral}`;
 
@@ -153,33 +157,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     //BOTON ELIMINAR
-    // Agregar manejadores de eventos para los botones de eliminar
     const botonesEliminar = document.querySelectorAll('.eliminar-btn');
     botonesEliminar.forEach(boton => {
         boton.addEventListener('click', function () {
             const index = boton.dataset.index;
-            
+    
             // Eliminar el producto del carrito basado en el índice
             listaCompra.splice(index, 1);
-            
+    
             // Eliminar el elemento del DOM que representa el producto
-            boton.parentNode.parentNode.remove();
-            
+            const productRow = boton.parentNode.parentNode;
+            const divider = productRow.nextElementSibling; // Obtener el <hr> siguiente a la fila del producto
+            productRow.remove();
+            divider.remove();
+    
             // Actualizar el carrito en el almacenamiento local
             localStorage.setItem("listaCompra", JSON.stringify(listaCompra));
-
-
+    
             // Recalcular el subtotal general y el costo de envío
             subtotalGeneral = listaCompra.reduce((total, product) => {
-            const productCantidad = parseInt(document.getElementById(`cantidad-${product.id}`).value, 10) || 0;
-            return total + calcularSubtotal(product, productCantidad);
+                const productCantidad = parseInt(document.getElementById(`cantidad-${product.id}`).value, 10) || 0;
+                return total + calcularSubtotal(product, productCantidad);
             }, 0);
-        subtotalGeneralDiv.textContent = `${listaCompra[0].currency} ${subtotalGeneral}`;
-        costoEnvio = calcularCostoEnvio();
-        costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
-        // Actualizar el total
-        actualizarCostoFinal();
-    });
+            subtotalGeneralDiv.textContent = `${listaCompra[0].currency} ${subtotalGeneral}`;
+            costoEnvio = calcularCostoEnvio();
+            costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
+            // Actualizar el total
+            actualizarCostoFinal();
+        });
     });
 
 
