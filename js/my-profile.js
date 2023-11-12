@@ -1,3 +1,4 @@
+//Función general paramostrar alertas
 function showAlert(message, type) {
     const alertDiv = document.createElement('div');
     alertDiv.classList.add('alert', `alert-${type}`);
@@ -11,12 +12,16 @@ function showAlert(message, type) {
 
 document.addEventListener("DOMContentLoaded", function () {
     const usuarioGuardado = localStorage.getItem("user_name");
+    
+    
     //funcion que mantiene el usuario seleccionado en el mail 
     const inputUsuarioGuardado = document.getElementById("validationDefaultUsername");
     if (usuarioGuardado) {
         inputUsuarioGuardado.value = usuarioGuardado;
     };
     
+
+
     // Validación para completar el formulario
     const forms = document.querySelectorAll('.needs-validation');
     Array.prototype.slice.call(forms)
@@ -32,6 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 form.classList.add('was-validated');
             }, false);
         });
+
+
 
 //Función para guardar cambios en el perfil
         const guardarCambios = document.getElementById('signupForm');
@@ -70,6 +77,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Cargar datos del perfil al cargar la página
         cargarDatosPerfil();
     
+
+
         // Función para guardar el objeto perfil actualizado en localStorage
         function SaveProfile() {
             // Actualizar el objeto perfil con los valores de los campos de input
@@ -87,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 showAlert('Faltan datos', 'danger');
             };
         };
+
 
      // Funcionalidad de guardar una foto de perfil.
     const fotoDePerfil = document.getElementById('profile-img');
@@ -128,6 +138,8 @@ if (fotoPerfilGuardada) {
     // Si no hay foto de perfil guardada, mostrar la imagen de base
     fotoDePerfil.src = "../img/img_perfil.png";
 };
+
+
 // Función para cerrar sesión (borrar datos del Local Storage)
 function borrarSesion() {
     localStorage.removeItem("perfil");

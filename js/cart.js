@@ -24,23 +24,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para calcular el subtotal de un producto
     function calcularSubtotal(item, cantidad) {
+        // Obtener el precio del producto y calcular el subtotal
         const precio = item.cost;
         return cantidad * precio;
     }
-
+// Variables globales para mantener el subtotal general, costo de envío y total
     let subtotalGeneral = 0;
     let costoEnvio = 0;
     let total = 0;
 
-    //Funcion para actualizar el valor en funcion de la seleccion
+// Eventos de cambio en las opciones de envío para actualizar el costo de envío y el costo final
     premium.addEventListener('change', actualizarCostoEnvio);
     express.addEventListener('change', actualizarCostoEnvio);
     standard.addEventListener('change', actualizarCostoEnvio);
-
+// Función para actualizar el costo de envío y el costo final en función de la opción seleccionada
     function actualizarCostoEnvio() {
+        // Calcular el costo de envío y actualizar su visualización en la página
         costoEnvio = calcularCostoEnvio();
         costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
-
+// Llamar a la función para actualizar el costo final en tiempo real
         actualizarCostoFinal();
     }
 
@@ -62,21 +64,25 @@ document.addEventListener('DOMContentLoaded', function () {
         return Math.round(producto + envio);
     }
 
-    //Actualizar total en tiempo real 
-
+    // Función para actualizar el costo final en tiempo real
     function actualizarCostoFinal() {
+        // Calcular el subtotal general sumando los subtotales individuales de cada producto en el carrito
     subtotalGeneral = listaCompra.reduce((total, product) => {
+        // Obtener la cantidad de cada producto desde el elemento de cantidad en la página
         const productCantidad = parseInt(document.getElementById(`cantidad-${product.id}`).value, 10) || 0;
+        // Sumar el subtotal del producto al total acumulado
         return total + calcularSubtotal(product, productCantidad);
     }, 0);
-
+ // Calcular el costo total sumando el costo de envío al subtotal general
     total = totalaPagar(costoEnvio, subtotalGeneral);
+// Actualizar la visualización del costo total en la página
     totalDiv.textContent = `${listaCompra[0].currency} ${total}`;
 }
 
 //Bucle que imprime la informacion de producto
     for (let i = 0; i < listaCompra.length; i++) {
         let item = listaCompra[i];
+        // Crear el contenido HTML para mostrar la información del producto en el carrito
         const htmlContentToAppend = `
         <div class="row product-row">
             <div class="col-md-2">
@@ -107,39 +113,45 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
         <hr class="divider">
     `;
-
+// Agregar el contenido HTML al contenedor del carrito
         cartContainer.insertAdjacentHTML('beforeend', htmlContentToAppend);
 
         const cantidadInput = document.getElementById(`cantidad-${item.id}`);
         const subtotalDiv = document.getElementById(`subtotal-${item.id}`);
-
+// Obtener referencias a los elementos de cantidad y subtotal del producto
         if (cantidadInput && subtotalDiv) {
             cantidadInput.addEventListener("input", function () {
+                // Obtener la cantidad ingresada por el usuario
                 const cantidad = parseInt(cantidadInput.value, 10) || 0;
+                // Calcular y actualizar el subtotal del producto
                 const subtotal = calcularSubtotal(item, cantidad);
                 subtotalDiv.textContent = `${item.currency} ${subtotal}`;
-
+                // Calcular y actualizar el subtotal general del carrito
                 subtotalGeneral = listaCompra.reduce((total, product) => {
                     const productCantidad = parseInt(document.getElementById(`cantidad-${product.id}`).value, 10) || 0;
                     return total + calcularSubtotal(product, productCantidad);
                 }, 0);
-
+// Actualizar el costo total del carrito, incluyendo el costo de envío
                 total = actualizarCostoEnvio();
-
+// Actualizar la visualización del subtotal general en la página
                 subtotalGeneralDiv.textContent = `${item.currency} ${subtotalGeneral}`;
 
             });
         } else {
+            // Mostrar un mensaje de error si no se encuentran los elementos de cantidad y subtotal
             console.error('No se encontraron los elementos de cantidad y subtotal.');
-        }
+        };
+
+
 //CALCULAR EL SUBTOTAL 
         subtotalGeneral += calcularSubtotal(item, 1); // Suponiendo que la cantidad inicial es 1
         costoEnvio = calcularCostoEnvio();
         costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
         total = totalaPagar(costoEnvio, subtotalGeneral);
         totalDiv.innerHTML = `${listaCompra[0].currency} ${total}`;
+    };
 
-    }
+
     //BOTON ELIMINAR
     // Agregar manejadores de eventos para los botones de eliminar
     const botonesEliminar = document.querySelectorAll('.eliminar-btn');
@@ -167,18 +179,19 @@ document.addEventListener('DOMContentLoaded', function () {
         costoEnvioDiv.textContent = `${listaCompra[0].currency} ${costoEnvio}`;
         // Actualizar el total
         actualizarCostoFinal();
-
     });
     });
 
-    //FINALIZA BOTON ELIMINAR
+
+ // Sección final del código que realiza acciones después de configurar el carrito y los eventos
+// Actualizar la visualización del subtotal general en la página
     subtotalGeneralDiv.innerHTML = `${listaCompra[0].currency} ${subtotalGeneral}`;
-
+// Verificar la existencia de elementos clave antes de continuar
     if (!formaDePagoTarjeta || !formaDePagoTransferencia) {
         console.error('No se encontraron los elementos necesarios.');
         return;
     }
-
+// Configurar eventos de clic para cambiar entre las formas de pago (tarjeta o transferencia)
     formaDePagoTarjeta.addEventListener('click', function () {
         deshabilitarInputs([inputTransferencia]);
         habilitarInputs(inputsTarjeta);
@@ -188,30 +201,30 @@ document.addEventListener('DOMContentLoaded', function () {
         deshabilitarInputs(inputsTarjeta);
         habilitarInputs([inputTransferencia]);
     });
-
+// Obtener referencia al formulario y verificar su existencia
     const form = document.querySelector('.needs-validation');
     if (!form) {
         console.error('No se encontró el formulario.');
         return;
-    }
-
+    };
+// Agregar un evento de envío al formulario para realizar validaciones adicionales
     form.addEventListener('submit', function (event) {
         if (!form.checkValidity()) {
             event.preventDefault();
             event.stopPropagation();
         }
-
+  // Validar la selección de una forma de pago
         if (!formaDePagoTarjeta.checked && !formaDePagoTransferencia.checked) {
             event.preventDefault();
-            terminos1.style.display = 'block';
+            terminos1.style.display = 'block'; // Mostrar mensaje de error sobre términos
         } else {
-            terminos1.style.display = 'none';
+            terminos1.style.display = 'none'; // Ocultar mensaje de error sobre términos si hay una forma de pago seleccionada
         }
-
+ // Agregar la clase 'was-validated' para resaltar campos inválidos según las reglas de validación
         form.classList.add('was-validated');
     });
-
 });
+
 
 // Modal para seleccionar la Forma de Pago 
 const exampleModal = document.getElementById('exampleModal')
@@ -226,24 +239,35 @@ if (exampleModal) {
         modalTitle.textContent = `Forma de pago`
         modalBodyInput.value = recipient
     })
-}
+};
+
 //Funcionalidad para cuando el usuario elije la forma de pago 
+// Obtener referencias a elementos relevantes para la funcionalidad de elección de forma de pago
 const formaDePagoTarjeta = document.getElementById('inputPagoTarjeta');
 const formaDePagoTransferencia = document.getElementById('inputPagoTransferencia');
 const inputsTarjeta = document.querySelectorAll('.deshabilitarInput');
 const inputTransferencia = document.getElementById('inputTransferencia');
 const guardarMetodoDePago = document.getElementById('guardarMetodoDePago');
+
+// Agregar un evento de clic al botón de guardar método de pago
 guardarMetodoDePago.addEventListener('click', function () {
+    // Obtener todas las entradas de pago
     const inputPagos = document.querySelectorAll('.inputPago');
+    // Inicializar la variable de validación
     let valid = true;
+    // Verificar si hay algún campo de entrada de pago vacío
     const inputsvalue = inputPagos.forEach(inputPago => {
         if (!inputPago.value.trim()) {
             valid = false;
         }
     });
+
+    // Obtener referencias a elementos adicionales relacionados con la visualización de la forma de pago seleccionada
     const seleccionMetodoDePago = document.getElementById('seleccionMetodoDePago');
     const InputsDePago = document.querySelector('.InputPagoCheck');
     const InputDePagoTrans = document.getElementById("inputTransferencia")
+
+// Mostrar mensaje de forma de pago seleccionada basado en la elección del usuario
     if (formaDePagoTarjeta.checked && InputsDePago.value !== ""){
         seleccionMetodoDePago.textContent = 'Pago con tarjeta de crédito';
         seleccionMetodoDePago.style.display = 'block';
@@ -255,17 +279,20 @@ guardarMetodoDePago.addEventListener('click', function () {
         seleccionMetodoDePago.style.display = 'block';
     }
 });
-// Funcion para deshabilitar campos
+
+// Funcion para deshabilitar campos del modal de forma de pago
 function deshabilitarInputs(inputs) {
+    // Iterar sobre cada elemento de entrada y deshabilitarlo, también establecer su valor a una cadena vacía
     inputs.forEach(input => {
-        input.disabled = true;
+        input.disabled = true; // Deshabilitar el campo de entrada
         input.value = "";
     });
 }
 
 function habilitarInputs(inputs) {
+    // Iterar sobre cada elemento de entrada y habilitarlo
     inputs.forEach(input => {
-        input.disabled = false;
+        input.disabled = false; // Habilitar el campo de entrada
     });
 }
 
@@ -288,19 +315,25 @@ formaDePagoTarjeta.addEventListener('click', event => {
 // Validación de form y cambio estilo 
 (function () {
     'use strict'
-
+// Obtener referencias a todos los formularios con la clase 'needs-validation'
     var form = document.querySelectorAll('.needs-validation');
-
+    // Iterar sobre cada formulario
     Array.prototype.slice.call(form)
         .forEach(function (form) {
+            // Agregar un evento de envío al formulario
             form.addEventListener('submit', function (event) {
+                // Verificar la validez del formulario según las reglas de validación de HTML5
                 if (!form.checkValidity()) {
+                    // Evitar el envío del formulario si no pasa la validación
                     event.preventDefault();
                     event.stopPropagation();
                 } else {
+                    // Mostrar una alerta de éxito si el formulario es válido
                     showAlert('Compra finalizada con éxito', 'success');
+                    // Evitar el envío del formulario
                     event.preventDefault();
                 }
+                // Agregar la clase 'was-validated' para resaltar campos inválidos según las reglas de validación
                 form.classList.add('was-validated');
             }, false);
         });
